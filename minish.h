@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/11 17:49:05 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 18:55:48 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,9 @@ typedef struct s_db
 }	t_db;
 
 void	sigtoggle(t_db *db);
-void	sigint(int signo);
+void	sigint(int sig);
 
-void	init(t_db *db);
-void	release(t_db *db);
 void	minish(t_db *db);
 void	subsh(t_db *db);
-
-int		parse(t_db *db);
-int		check(t_db *db);
-
-void	exec(t_db *db);
-
-void	error(t_db *db);
 
 #endif
