@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:52:30 by tkong             #+#    #+#             */
-/*   Updated: 2022/10/28 09:54:03 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 18:02:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	ft_putchar_fd(t_i8 c, t_i32 fd)
 	write(fd, &c, 1);
 }
 
-void	ft_putendl_fd(t_i8 *s, t_i32 fd)
+void	ft_putendl_fd(const t_i8 *s, t_i32 fd)
 {
 	ft_putstr_fd(s, fd);
 	ft_putchar_fd('\n', fd);
 }
 
-void	ft_putstr_fd(t_i8 *s, t_i32 fd)
+void	ft_putstr_fd(const t_i8 *s, t_i32 fd)
 {
 	write(fd, s, ft_strlen(s));
 }

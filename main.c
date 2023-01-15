@@ -6,39 +6,44 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/11 18:41:00 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 17:08:21 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_db *db);
-static void	release(t_db *db);
+static t_i32	init(t_db *db);
+static void		seterr(t_db *db);
 
-int	main(void)
+t_i32	main(void)
 {
 	t_db	db;
 
-	init(&db);
+	if (init(&db))
+		error(&db);
 	minish(&db);
-	release(&db);
 	exit(0);
 }
 
-static void	init(t_db *db)
+static t_i32	init(t_db *db)
 {
-	db->proc_len = ft_strcpy(db->proc, "minish");
-	db->cmd = NULL;
-	db->cmd_len = 0;
-	getcwd(db->cwd, CWD_MAX);
-	db->cwd_len = ft_strlen(db->cwd);
-	db->sigstat = PROCCMD;
+	db->sigstat = SIGSTAT_PROCCMD;
 	sigtoggle(db);
+	seterr(db);
+	db->err = 0;
+	db->len = 0;
+	db->tkn_len = 0;
+	db->proc_len = ft_strcpy(db->proc, "minish");
+	if (recwd(db))
+		return (-1);
+	return (0);
 }
 
-static void	release(t_db *db)
+static void seterr(t_db *db)
 {
-	if (db->cmd)
-		free(db->cmd);
-	rl_clear_history();
+	db->errmsg[ERRNO_FORMAT] = "Exec format error.";
+	db->errmsg[ERRNO_RESTRICT] = "Restricted function.";
+	db->errmsg[ERRNO_LONGCMD] = "Command too long.";
+	db->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
+	db->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
 }

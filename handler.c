@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:05:59 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/11 17:49:52 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/14 03:12:43 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,30 @@
 
 void	sigtoggle(t_db *db)
 {
-	if (db->sigstat == WAITCMD)
+	if (db->sigstat == SIGSTAT_WAITCMD)
 	{
-		db->sigstat = PROCCMD;
-		signal(SIGINT, );
-		signal(SIGTERM, );
-		signal(SIGQUIT, );
-	}
-	else if (db->sigstat == PROCCMD)
-	{
-		db->sigstat = WAITCMD;
+		db->sigstat = SIGSTAT_PROCCMD;
 		signal(SIGINT, sigint);
+		signal(SIGTERM, sigterm);
+		signal(SIGQUIT, sigquit);
+	}
+	else if (db->sigstat == SIGSTAT_PROCCMD)
+	{
+		db->sigstat = SIGSTAT_WAITCMD;
+		signal(SIGINT, sigint_rl);
 		signal(SIGTERM, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else
-		perror("minish: sigtoggle error.");
 }
 
-void	sigint(int sig)
+void	sigint_rl(t_i32 sig)
 {
 	pid_t	pid;
 
 	(void) sig;
-	write(1, MINISH_PROMPT, ft_strlen(MINISH_PROMPT));
-	write(1, rl_line_buffer, ft_strlen(rl_line_buffer));
-	write(1, "  \n", 3);
+	ft_putstr_fd(PROMPT, STDOUT__);
+	ft_putstr_fd(rl_line_buffer, STDOUT__);
+	ft_putstr_fd("  \n", STDOUT__);
 	rl_on_new_line();
 	rl_replace_line("", FALSE);
 	rl_redisplay();
@@ -47,4 +45,19 @@ void	sigint(int sig)
 	if (!pid)
 		exit(1);
 	waitpid(pid, NULL, 0);
+}
+
+void	sigint(t_i32 sig)
+{
+	(void) sig;
+}
+
+void	sigterm(t_i32 sig)
+{
+	(void) sig;
+}
+
+void	sigquit(t_i32 sig)
+{
+	(void) sig;
 }

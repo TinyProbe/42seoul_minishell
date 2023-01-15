@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:39:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/09 21:32:11 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 18:02:38 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ typedef unsigned long long	t_u64;
 typedef unsigned long int	t_usize;
 typedef char				t_bool;
 
-# define TRUE	1
-# define FALSE	0
+# define TRUE		1
+# define FALSE		0
+# define STDIN__	0
+# define STDOUT__	1
+# define STDERR__	2
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -55,8 +58,8 @@ typedef struct s_list
 }	t_list;
 
 void	ft_putchar_fd(t_i8 c, t_i32 fd);
-void	ft_putendl_fd(t_i8 *s, t_i32 fd);
-void	ft_putstr_fd(t_i8 *s, t_i32 fd);
+void	ft_putendl_fd(const t_i8 *s, t_i32 fd);
+void	ft_putstr_fd(const t_i8 *s, t_i32 fd);
 void	ft_putnbr_fd(t_i32 n, t_i32 fd);
 t_bool	ft_isalnum(t_i32 c);
 t_bool	ft_isalpha(t_i32 c);
@@ -95,6 +98,7 @@ void	ft_striteri(t_i8 *s, void (*f)(t_u32, t_i8 *));
 t_i8	*ft_strmapi(t_i8 const *s, t_i8 (*f)(t_u32, t_i8));
 t_i8	*ft_strdup(const t_i8 *s1);
 t_i8	*ft_strndup(const t_i8 *s1, size_t n);
+t_i8	*ft_strslice(const t_i8 *s1, t_i32 begin, t_i32 end);
 t_i8	*ft_strjoin(t_i8 const *s1, t_i8 const *s2);
 t_i8	*ft_strtrim(t_i8 const *s1, t_i8 const *set);
 t_i8	*ft_substr(t_i8 const *s, t_u32 start, size_t len);

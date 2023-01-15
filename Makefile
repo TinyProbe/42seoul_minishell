@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/11 18:54:58 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/15 01:30:56 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,11 @@ INC = minish.h
 SRC = main.c\
 	  minish.c\
 	  subsh.c\
+	  check.c\
+	  token.c\
+	  execute.c\
+	  error.c\
+	  util.c\
 	  handler.c
 
 ifdef B

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 21:20:13 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/09 21:32:00 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 04:03:14 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,23 @@
 
 size_t	ft_strcpy(t_i8 *dst, const t_i8 *src)
 {
-	size_t	idx;
+	size_t	i;
 
-	idx = 0;
-	while (*src)
-		dst[idx++] = *src++;
-	dst[idx] = '\0';
-	return (idx);
+	i = -1;
+	while (src[++i])
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (i);
+}
+
+t_i8	*ft_strslice(const t_i8 *s1, t_i32 begin, t_i32 end)
+{
+	t_isize	n;
+	void	*res;
+
+	n = end - begin;
+	res = malloc(n + 1);
+	if (res)
+		((char *) ft_memcpy(res, s1 + begin, n))[n] = '\0';
+	return (res);
 }
