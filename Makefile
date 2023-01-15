@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/15 01:30:56 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/15 20:08:16 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ I_RL = -I/opt/homebrew/Cellar/readline/8.2.1/include/
 LIB = ft/libft.a
 INC = minish.h
 SRC = main.c\
+	  process.c\
 	  minish.c\
 	  subsh.c\
 	  check.c\

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:05:59 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/14 03:12:43 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 20:59:36 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	sigtoggle(t_db *db)
 
 void	sigint_rl(t_i32 sig)
 {
-	pid_t	pid;
-
 	(void) sig;
 	ft_putstr_fd(PROMPT, STDOUT__);
 	ft_putstr_fd(rl_line_buffer, STDOUT__);
@@ -41,10 +39,9 @@ void	sigint_rl(t_i32 sig)
 	rl_on_new_line();
 	rl_replace_line("", FALSE);
 	rl_redisplay();
-	pid = fork();
-	if (!pid)
+	if (!fork())
 		exit(1);
-	waitpid(pid, NULL, 0);
+	waitpid(0, NULL, 0);
 }
 
 void	sigint(t_i32 sig)

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/15 19:20:23 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/16 01:11:46 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define TKN_MAX	10000
 # define CWD_MAX	10000
 # define PROC_MAX	10000
+# define OUT_MAX	10000
+# define ERR_MAX	10000
 # define PROMPT		"minish> "
 
 typedef enum e_sigstat
@@ -44,9 +46,10 @@ typedef enum e_errno
 
 typedef struct s_db
 {
+	t_i32		lv;
 	t_sigstat	sigstat;
 	const t_i8	*errmsg[ERRNO_MAX];
-	t_errno		err;
+	t_errno		errno;
 	t_i8		cmd[CMD_MAX];
 	t_i32		len;
 	t_i8		stk[STK_MAX];
@@ -57,6 +60,10 @@ typedef struct s_db
 	t_i32		proc_len;
 	t_i8		cwd[CWD_MAX];
 	t_i32		cwd_len;
+	t_i8		out[OUT_MAX];
+	t_i32		out_len;
+	t_i8		err[ERR_MAX];
+	t_i32		err_len;
 }	t_db;
 
 void	sigtoggle(t_db *db);
@@ -64,6 +71,8 @@ void	sigint_rl(t_i32 sig);
 void	sigint(t_i32 sig);
 void	sigterm(t_i32 sig);
 void	sigquit(t_i32 sig);
+
+void	process(t_db *db, void (*ftr)(t_db *));
 
 void	minish(t_db *db);
 void	subsh(t_db *db);
@@ -80,6 +89,7 @@ t_i32	exec(t_db *db);
 
 void	error(t_db *db);
 
-t_i32	recwd(t_db *db);
+void	recwd(t_db *db);
+void	pipelink(int *fd, int dir);
 
 #endif

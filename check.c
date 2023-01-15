@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:54:12 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/15 18:53:56 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/15 20:22:52 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_i32	check(t_db *db)
 		else if (db->cmd[i] == '"')
 			claw(db);
 		else if (db->cmd[i] == '\\')
-			db->err = ERRNO_RESTRICT;
-	if (!(db->err) && db->stk_len)
-		db->err = ERRNO_FORMAT;
-	if (db->err)
+			db->errno = ERRNO_RESTRICT;
+	if (!(db->errno) && db->stk_len)
+		db->errno = ERRNO_FORMAT;
+	if (db->errno)
 		return (-1);
 	return (0);
 }
@@ -48,7 +48,7 @@ void	bracket(t_db *db, t_i32 i)
 		if (db->stk_len && db->stk[db->stk_len - 1] == '(')
 			db->stk_len--;
 		else if (!(db->stk_len))
-			db->err = ERRNO_FORMAT;
+			db->errno = ERRNO_FORMAT;
 	}
 }
 
