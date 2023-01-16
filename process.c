@@ -6,14 +6,15 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 20:06:55 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/16 01:43:49 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/17 04:13:06 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	parent(t_db *db, t_i32 *out_fd, t_i32 *err_fd, pid_t pid);
-static void	child(t_db *db, t_i32 *out_fd, t_i32 *err_fd, void (*ftr)(t_db *));
+static void	parent(t_db *db, pid_t pid);
+static void	join(t_db *db, t_i32 fd);
+static void	child(t_db *db, void (*ftr)(t_db *));
 static void	setchild(t_db *db, void (*ftr)(t_db *));
 
 void	process(t_db *db, void (*ftr)(t_db *))
@@ -26,26 +27,45 @@ void	process(t_db *db, void (*ftr)(t_db *))
 	pipe(err_fd);
 	pid = fork();
 	if (pid)
-		parent(db, out_fd, err_fd, pid);
+	{
+		close(out_fd[1]);
+		close(err_fd[1]);
+		db->io = out_fd[0];
+		db->ie = err_fd[0];
+		parent(db, pid);
+	}
 	else
-		child(db, out_fd, err_fd, ftr);
+	{
+		close(out_fd[0]);
+		close(err_fd[0]);
+		db->o = out_fd[1];
+		db->e = err_fd[1];
+		child(db, ftr);
+	}
 }
 
-static void	parent(t_db *db, t_i32 *out_fd, t_i32 *err_fd, pid_t pid)
+static void	parent(t_db *db, pid_t pid)
 {
-	t_i32	rtn;
-
-	waitpid(pid, &rtn, 0);
-	pipelink(out_fd, STDIN__);
-	db->out_len = read(STDIN__, db->out, OUT_MAX);
-	pipelink(err_fd, STDIN__);
-	db->err_len = read(STDIN__, db->err, ERR_MAX);
+	while (TRUE)
+	{
+		if (waitpid(pid, &(db->rtn), WNOHANG))
+			break ;
+		db->buf_len = read(db->io, db->buf, BUF_MAX);
+		join(db, db->io);
+		db->buf_len = read(db->ie, db->buf, BUF_MAX);
+		join(db, db->ie);
+	}
 }
 
-static void	child(t_db *db, t_i32 *out_fd, t_i32 *err_fd, void (*ftr)(t_db *))
+static void	join(t_db *db, t_i32 fd)
 {
-	pipelink(out_fd, STDOUT__);
-	pipelink(err_fd, STDERR__);
+	if (db->buf_len <= 0)
+		return ;
+
+}
+
+static void	child(t_db *db, void (*ftr)(t_db *))
+{
 	setchild(db, ftr);
 	ftr(db);
 	exit(0);
