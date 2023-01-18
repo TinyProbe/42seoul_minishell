@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/15 20:08:16 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/19 03:53:33 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ LIB = ft/libft.a
 INC = minish.h
 SRC = main.c\
 	  process.c\
+	  parent.c\
+	  child.c\
+	  redirect.c\
 	  minish.c\
 	  subsh.c\
 	  check.c\

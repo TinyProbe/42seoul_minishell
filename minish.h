@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/17 04:13:58 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/19 03:41:02 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <signal.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -25,9 +26,9 @@
 # define TKN_MAX	10000
 # define PROC_MAX	10000
 # define CWD_MAX	10000
-# define TOT_MAX	100000
-# define BUF_MAX	10000
-# define ELEM_MAX	10000
+# define BUF_MAX	100000
+# define ARG_MAX	10000
+# define REDIR_MAX	10000
 # define PROMPT		"minish> "
 
 typedef enum e_sigstat
@@ -41,19 +42,15 @@ typedef enum e_errno
 	ERRNO_RESTRICT,
 	ERRNO_LONGCMD,
 	ERRNO_LONGCWD,
+	ERRNO_FILEPATH,
+	ERRNO_FILEFAIL,
 	ERRNO_UNKNOWN,
 	ERRNO_MAX,
+	ERRNO_EXIT,
 }	t_errno;
 
-typedef struct s_elem
-{
-	t_i32	begin;
-	t_i32	end;
-	t_i32	fd;
-}	t_elem;
 typedef struct s_db
 {
-	t_i32		lv;
 	t_sigstat	sigstat;
 	const t_i8	*errmsg[ERRNO_MAX];
 	t_errno		errno;
@@ -67,17 +64,19 @@ typedef struct s_db
 	t_i32		proc_len;
 	t_i8		cwd[CWD_MAX];
 	t_i32		cwd_len;
-	t_i8		tot[TOT_MAX];
-	t_i32		tot_len;
 	t_i8		buf[BUF_MAX];
 	t_i32		buf_len;
-	t_elem		elem[ELEM_MAX];
-	t_i32		elem_len;
-	t_i32		io;
-	t_i32		ie;
-	t_i32		o;
-	t_i32		e;
+	t_i32		fd[3];
 	t_i32		rtn;
+	void		(*ftr)(struct s_db *);
+	t_i8		*av[ARG_MAX];
+	t_i32		ac;
+	t_i8		*opt;
+	t_i8		*rein[REDIR_MAX];
+	t_i32		rein_len;
+	t_i8		*reout[REDIR_MAX];
+	t_i32		reout_len;
+	t_bool		pipe;
 }	t_db;
 
 void	sigtoggle(t_db *db);
@@ -86,7 +85,11 @@ void	sigint(t_i32 sig);
 void	sigterm(t_i32 sig);
 void	sigquit(t_i32 sig);
 
-void	process(t_db *db, void (*ftr)(t_db *));
+void	process(t_db *db);
+void	parent(t_db *db, t_i32 *fd, pid_t pid);
+void	child(t_db *db, t_i32 *fd);
+
+void	redirect(t_db *db);
 
 void	minish(t_db *db);
 void	subsh(t_db *db);
@@ -104,6 +107,7 @@ t_i32	exec(t_db *db);
 void	error(t_db *db);
 
 void	recwd(t_db *db);
+void	output(t_db *db, t_i32 out, t_i32 err);
 // void	pipelink(int *fd, int dir);
 
 #endif

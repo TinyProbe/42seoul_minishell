@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:11:45 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/16 01:11:36 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/19 04:31:33 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ static t_i32	cmdcpy(t_db *db, t_i8 *cmd);
 
 void	minish(t_db *db)
 {
-	while (TRUE)
+	while (db->rtn != ERRNO_EXIT)
 	{
 		if (cmdread(db))
 			continue ;
 		sigtoggle(db);
-		process(db, subsh);
+		process(db);
+		output(db, db->fd[STDOUT__], db->fd[STDERR__]);
 		sigtoggle(db);
 	}
 }
@@ -36,11 +37,9 @@ static t_i32	cmdread(t_db *db)
 	{
 		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
 		ft_putstr_fd("\033[8C", STDOUT_FILENO);
-		ft_putstr_fd("exit\n", STDOUT__);
+		ft_putstr_fd("exit\n", db->fd[STDOUT__]);
 		exit(0);
 	}
-	else if (!ft_strcmp(cmd, "exit"))
-		exit(0);
 	return cmdcpy(db, cmd);
 }
 
