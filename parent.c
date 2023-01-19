@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:01:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 04:16:21 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/19 15:49:23 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	parent(t_db *db, t_i32 *fd, pid_t pid)
 	waitpid(pid, &(db->rtn), 0);
 	db->buf_len = read(db->fd[STDIN__], db->buf, BUF_MAX);
 	clearparent(db, fd);
-	if (db->rtn == ERRNO_EXIT)
+	if (db->rtn == EXIT)
 		exit_shell(db);
 }
 
@@ -30,7 +30,7 @@ static void	setparent(t_db *db, t_i32 *fd)
 {
 	db->fd[STDIN__] = fd[0];
 	close(fd[1]);
-	if (db->pipe)
+	if (db->ctrl == CTRL_OR)
 	{
 		output(db, fd[3], db->fd[STDERR__]);
 		close(fd[2]);
@@ -40,9 +40,8 @@ static void	setparent(t_db *db, t_i32 *fd)
 
 static void	clearparent(t_db *db, t_i32 *fd)
 {
-	// db->fd[STDIN__] = STDIN__;
 	close(fd[0]);
-	if (!(db->pipe))
+	if (db->ctrl != CTRL_OR)
 	{
 		close(fd[2]);
 		close(fd[3]);

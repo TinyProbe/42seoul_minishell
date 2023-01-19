@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/19 03:53:33 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/20 06:53:08 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ SRC = main.c\
 	  subsh.c\
 	  check.c\
 	  token.c\
+	  validation.c\
 	  execute.c\
+	  apply.c\
+	  substitution.c\
 	  error.c\
 	  util.c\
 	  handler.c

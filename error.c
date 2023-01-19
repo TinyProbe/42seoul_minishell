@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:33 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 05:20:19 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/19 16:06:44 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	error(t_db *db)
 
 	err = STDERR__;
 	write(db->fd[STDERR__], db->proc, db->proc_len);
+	if (db->errarg)
+	{
+		write(db->fd[STDERR__], db->errarg, ft_strlen(db->errarg));
+		write(db->fd[STDERR__], ": ", 2);
+	}
 	write(db->fd[STDERR__], db->errmsg[db->errno],
 			ft_strlen(db->errmsg[db->errno]));
 	write(db->fd[STDERR__], "\n", 1);
@@ -25,4 +30,5 @@ void	error(t_db *db)
 	if (db->fd[STDERR__] != STDERR__)
 		exit(db->errno);
 	db->errno = 0;
+	db->errarg = NULL;
 }

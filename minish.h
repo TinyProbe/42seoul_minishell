@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 03:41:02 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/20 05:32:21 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,37 @@
 
 typedef enum e_sigstat
 {
-	SIGSTAT_WAITCMD = 1,
+	SIGSTAT_WAITCMD,
 	SIGSTAT_PROCCMD,
 }	t_sigstat;
 typedef enum e_errno
 {
-	ERRNO_FORMAT = 1,
+	ERRNO_NONE,
+	ERRNO_FORMAT,
 	ERRNO_RESTRICT,
 	ERRNO_LONGCMD,
 	ERRNO_LONGCWD,
 	ERRNO_FILEPATH,
 	ERRNO_FILEFAIL,
+	ERRNO_NOCMD,
 	ERRNO_UNKNOWN,
 	ERRNO_MAX,
-	ERRNO_EXIT,
+	EXIT,
 }	t_errno;
+typedef enum e_ctrl
+{
+	CTRL_NONE,
+	CTRL_AND,
+	CTRL_ANDAND,
+	CTRL_OR,
+	CTRL_OROR,
+}	t_ctrl;
 
 typedef struct s_db
 {
 	t_sigstat	sigstat;
 	const t_i8	*errmsg[ERRNO_MAX];
+	t_i8		*errarg;
 	t_errno		errno;
 	t_i8		cmd[CMD_MAX];
 	t_i32		len;
@@ -76,7 +87,7 @@ typedef struct s_db
 	t_i32		rein_len;
 	t_i8		*reout[REDIR_MAX];
 	t_i32		reout_len;
-	t_bool		pipe;
+	t_ctrl		ctrl;
 }	t_db;
 
 void	sigtoggle(t_db *db);
@@ -102,12 +113,14 @@ void	claw(t_db *db);
 t_i32	token(t_db *db);
 void	untoken(t_db *db);
 
-t_i32	exec(t_db *db);
+t_i32	execute(t_db *db);
+t_i32	validation(t_db *db);
+t_i32	apply(t_db *db, t_i32 i);
+void	substitution(t_db *db, t_i32 i);
 
 void	error(t_db *db);
 
 void	recwd(t_db *db);
 void	output(t_db *db, t_i32 out, t_i32 err);
-// void	pipelink(int *fd, int dir);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 04:35:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/19 16:36:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	init(t_db *db)
 	db->sigstat = SIGSTAT_PROCCMD;
 	sigtoggle(db);
 	seterr(db);
+	db->errarg = NULL;
 	db->errno = 0;
 	db->len = 0;
 	db->stk_len = 0;
@@ -44,7 +45,7 @@ static void	init(t_db *db)
 	db->opt = NULL;
 	db->rein_len = 0;
 	db->reout_len = 0;
-	db->pipe = FALSE;
+	db->ctrl = CTRL_NONE;
 }
 
 static void	seterr(t_db *db)
@@ -55,5 +56,6 @@ static void	seterr(t_db *db)
 	db->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
 	db->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
 	db->errmsg[ERRNO_FILEFAIL] = "File open failed.";
+	db->errmsg[ERRNO_NOCMD] = "command not found.";
 	db->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
 }
