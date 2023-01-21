@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:05:59 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/15 20:59:36 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/21 04:50:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	sigtoggle(t_db *db)
 {
-	if (db->sigstat == SIGSTAT_WAITCMD)
+	if (db->sigstat == SIGS_WAITCMD)
 	{
-		db->sigstat = SIGSTAT_PROCCMD;
+		db->sigstat = SIGS_PROCCMD;
 		signal(SIGINT, sigint);
 		signal(SIGTERM, sigterm);
 		signal(SIGQUIT, sigquit);
 	}
-	else if (db->sigstat == SIGSTAT_PROCCMD)
+	else if (db->sigstat == SIGS_PROCCMD)
 	{
-		db->sigstat = SIGSTAT_WAITCMD;
+		db->sigstat = SIGS_WAITCMD;
 		signal(SIGINT, sigint_rl);
 		signal(SIGTERM, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);

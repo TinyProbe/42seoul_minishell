@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/20 06:53:08 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/21 19:03:59 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,25 +19,33 @@ I_RL = -I/opt/homebrew/Cellar/readline/8.2.1/include/
 LIB = ft/libft.a
 INC = minish.h
 SRC = main.c\
+	  redirect.c\
+	  minish.c\
+	  check.c\
+	  token.c\
+	  valid.c\
+	  error.c\
+	  execute.c\
+	  substi.c\
+	  replace.c\
 	  process.c\
 	  parent.c\
 	  child.c\
-	  redirect.c\
-	  minish.c\
+	  program.c\
 	  subsh.c\
-	  check.c\
-	  token.c\
-	  validation.c\
-	  execute.c\
-	  apply.c\
-	  substitution.c\
-	  error.c\
+	  echo.c\
+	  cd.c\
+	  pwd.c\
+	  export.c\
+	  unset.c\
+	  env.c\
+	  exit.c\
 	  util.c\
 	  handler.c
 
 ifdef B
-	INC = $(patsubst %.h, %_bonus.h, $(INC))
-	SRC = $(patsubst %.c, %_bonus.c, $(SRC))
+	INC = $(patsubst %.h, bonus/%_bonus.h, $(INC))
+	SRC = $(patsubst %.c, bonus/%_bonus.c, $(SRC))
 endif
 
 $(NAME): $(LIB) $(INC) $(SRC) Makefile

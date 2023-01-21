@@ -6,13 +6,11 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:57:18 by tkong             #+#    #+#             */
-/*   Updated: 2022/10/28 10:27:03 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/21 22:03:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-#define CODE_SIZE	256
 
 t_i8	*ft_strdup(const t_i8 *s1)
 {

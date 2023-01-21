@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:16:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 04:45:55 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/22 01:02:38 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	output(t_db *db, t_i32 out, t_i32 err)
 	db->buf_len = 0;
 }
 
-// void	pipelink(int *fd, int dir)
-// {
-// 	close(fd[((dir || 0) + 1) % 2]);
-// 	dup2(fd[dir || 0], dir);
-// }
+void	untool(t_db *db)
+{
+	while (db->tool_len--)
+		free(db->tool[db->tool_len].res);
+	db->tool_len++;
+}

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:01:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 15:49:23 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/21 19:45:27 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	setparent(t_db *db, t_i32 *fd)
 {
 	db->fd[STDIN__] = fd[0];
 	close(fd[1]);
-	if (db->ctrl == CTRL_OR)
+	if (db->conj == CONJ_OR)
 	{
 		output(db, fd[3], db->fd[STDERR__]);
 		close(fd[2]);
@@ -41,7 +41,7 @@ static void	setparent(t_db *db, t_i32 *fd)
 static void	clearparent(t_db *db, t_i32 *fd)
 {
 	close(fd[0]);
-	if (db->ctrl != CTRL_OR)
+	if (db->conj != CONJ_OR)
 	{
 		close(fd[2]);
 		close(fd[3]);

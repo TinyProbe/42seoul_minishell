@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:39:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/15 18:02:38 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/22 00:08:50 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef char				t_bool;
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
-
 # define MAX_FILE 10000
 # define MAX_LEN 1000000
+
+# define CODE_SIZE	256
 
 typedef struct s_buf
 {
@@ -50,7 +51,6 @@ typedef struct s_buf
 	t_i32	len;
 	t_i32	fd;
 }	t_buf;
-
 typedef struct s_list
 {
 	void			*content;
@@ -101,6 +101,7 @@ t_i8	*ft_strndup(const t_i8 *s1, size_t n);
 t_i8	*ft_strslice(const t_i8 *s1, t_i32 begin, t_i32 end);
 t_i8	*ft_strjoin(t_i8 const *s1, t_i8 const *s2);
 t_i8	*ft_strtrim(t_i8 const *s1, t_i8 const *set);
+t_i32	ft_strdel(t_i8 *dst, t_i8 const *set);
 t_i8	*ft_substr(t_i8 const *s, t_u32 start, size_t len);
 t_i8	**ft_split(t_i8 const *s, t_i8 c);
 void	ft_sort_i8(t_i8 *arr, t_i32 begin, t_i32 end);

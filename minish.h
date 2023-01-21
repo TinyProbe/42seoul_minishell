@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/20 05:32:21 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/22 01:00:11 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define CMD_MAX	10000
+# define CMD_MAX	100000
 # define STK_MAX	10000
 # define TKN_MAX	10000
 # define PROC_MAX	10000
@@ -29,12 +29,13 @@
 # define BUF_MAX	100000
 # define ARG_MAX	10000
 # define REDIR_MAX	10000
+# define TOOL_MAX	10000
 # define PROMPT		"minish> "
 
 typedef enum e_sigstat
 {
-	SIGSTAT_WAITCMD,
-	SIGSTAT_PROCCMD,
+	SIGS_WAITCMD,
+	SIGS_PROCCMD,
 }	t_sigstat;
 typedef enum e_errno
 {
@@ -50,15 +51,35 @@ typedef enum e_errno
 	ERRNO_MAX,
 	EXIT,
 }	t_errno;
-typedef enum e_ctrl
+typedef enum e_conj
 {
-	CTRL_NONE,
-	CTRL_AND,
-	CTRL_ANDAND,
-	CTRL_OR,
-	CTRL_OROR,
-}	t_ctrl;
+	CONJ_NONE,
+	CONJ_AND,
+	CONJ_ANDAND,
+	CONJ_OR,
+	CONJ_OROR,
+}	t_conj;
+typedef enum e_program
+{
+	PROG_NONE,
+	PROG_SUBSH,
+	PROG_ECHO,
+	PROG_CD,
+	PROG_PWD,
+	PROG_EXPORT,
+	PROG_UNSET,
+	PROG_ENV,
+	PROG_EXIT,
+}	t_program;
 
+typedef struct s_tool
+{
+	t_i32	l;
+	t_i32	r;
+	t_i32	last;
+	t_i8	*res;
+	t_i32	len;
+}	t_tool;
 typedef struct s_db
 {
 	t_sigstat	sigstat;
@@ -79,15 +100,17 @@ typedef struct s_db
 	t_i32		buf_len;
 	t_i32		fd[3];
 	t_i32		rtn;
-	void		(*ftr)(struct s_db *);
+	t_i32		arg_begin;
+	t_i32		arg_end;
 	t_i8		*av[ARG_MAX];
 	t_i32		ac;
-	t_i8		*opt;
 	t_i8		*rein[REDIR_MAX];
 	t_i32		rein_len;
 	t_i8		*reout[REDIR_MAX];
 	t_i32		reout_len;
-	t_ctrl		ctrl;
+	t_conj		conj;
+	t_tool		tool[TOOL_MAX];
+	t_i32		tool_len;
 }	t_db;
 
 void	sigtoggle(t_db *db);
@@ -103,7 +126,16 @@ void	child(t_db *db, t_i32 *fd);
 void	redirect(t_db *db);
 
 void	minish(t_db *db);
+
+void	program(t_db *db);
 void	subsh(t_db *db);
+void	echo(t_db *db);
+void	cd(t_db *db);
+void	pwd(t_db *db);
+void	export__(t_db *db);
+void	unset(t_db *db);
+void	env(t_db *db);
+void	exit__(t_db *db);
 
 t_i32	check(t_db *db);
 void	bracket(t_db *db, t_i32 i);
@@ -113,14 +145,19 @@ void	claw(t_db *db);
 t_i32	token(t_db *db);
 void	untoken(t_db *db);
 
-t_i32	execute(t_db *db);
-t_i32	validation(t_db *db);
-t_i32	apply(t_db *db, t_i32 i);
-void	substitution(t_db *db, t_i32 i);
+t_i32	valid(t_db *db);
 
 void	error(t_db *db);
 
+void	execute(t_db *db);
+
+void	substi(t_db *db);
+void	repl_env(t_db *db);
+void	repl_cmd(t_db *db);
+void	repl_wild(t_db *db);
+
 void	recwd(t_db *db);
 void	output(t_db *db, t_i32 out, t_i32 err);
+void	untool(t_db *db);
 
 #endif

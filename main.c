@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 16:36:57 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/22 01:04:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_i32	main(void)
 
 static void	init(t_db *db)
 {
-	db->sigstat = SIGSTAT_PROCCMD;
+	db->sigstat = SIGS_PROCCMD;
 	sigtoggle(db);
 	seterr(db);
 	db->errarg = NULL;
@@ -40,12 +40,11 @@ static void	init(t_db *db)
 	db->fd[STDOUT__] = STDOUT__;
 	db->fd[STDERR__] = STDERR__;
 	db->rtn = 0;
-	db->ftr = subsh;
 	db->ac = 0;
-	db->opt = NULL;
 	db->rein_len = 0;
 	db->reout_len = 0;
-	db->ctrl = CTRL_NONE;
+	db->conj = CONJ_NONE;
+	db->tool_len = 0;
 }
 
 static void	seterr(t_db *db)
