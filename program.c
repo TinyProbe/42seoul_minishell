@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:51:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 05:22:06 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:51:40 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	program(t_db *db)
 
 static void	subsh2(t_db *db)
 {
+	if (db->ac > 1)
+		db->errno = ERRNO_FORMAT;
+	error(db);
 	db->len = ft_strlen(db->av[0]) - 2;
 	ft_memcpy(db->cmd, db->av[0] + 1, db->len);
 	subsh(db);
