@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/22 01:04:32 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 06:29:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	init(t_db *db)
 	sigtoggle(db);
 	seterr(db);
 	db->errarg = NULL;
-	db->errno = 0;
+	db->errno = ERRNO_NONE;
 	db->len = 0;
 	db->stk_len = 0;
 	db->tkn_len = 0;
@@ -41,10 +41,10 @@ static void	init(t_db *db)
 	db->fd[STDERR__] = STDERR__;
 	db->rtn = 0;
 	db->ac = 0;
-	db->rein_len = 0;
-	db->reout_len = 0;
+	db->ri_len = 0;
+	db->ro_len = 0;
 	db->conj = CONJ_NONE;
-	db->tool_len = 0;
+	db->repl_len = 0;
 }
 
 static void	seterr(t_db *db)

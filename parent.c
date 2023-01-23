@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:01:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/21 19:45:27 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 01:22:19 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	setparent(t_db *db, t_i32 *fd);
 static void	clearparent(t_db *db, t_i32 *fd);
-static void	exit_shell(t_db *db);
+static void	exitsh(t_db *db);
 
 void	parent(t_db *db, t_i32 *fd, pid_t pid)
 {
@@ -23,7 +23,7 @@ void	parent(t_db *db, t_i32 *fd, pid_t pid)
 	db->buf_len = read(db->fd[STDIN__], db->buf, BUF_MAX);
 	clearparent(db, fd);
 	if (db->rtn == EXIT)
-		exit_shell(db);
+		exitsh(db);
 }
 
 static void	setparent(t_db *db, t_i32 *fd)
@@ -40,6 +40,7 @@ static void	setparent(t_db *db, t_i32 *fd)
 
 static void	clearparent(t_db *db, t_i32 *fd)
 {
+	db->fd[STDIN__] = STDIN__;
 	close(fd[0]);
 	if (db->conj != CONJ_OR)
 	{
@@ -48,9 +49,11 @@ static void	clearparent(t_db *db, t_i32 *fd)
 	}
 }
 
-static void	exit_shell(t_db *db)
+static void	exitsh(t_db *db)
 {
 	output(db, db->fd[STDOUT__], db->fd[STDERR__]);
 	if (db->fd[STDERR__] != STDERR__)
 		exit(db->rtn);
+	else
+		exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:22:02 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 03:54:00 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 06:29:46 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void	rein(t_db *db)
 	t_i32	i;
 
 	i = 0;
-	while (i < db->rein_len)
+	while (i < db->ri_len)
 	{
 		if (db->fd[STDIN__] > STDERR__)
 			close(db->fd[STDIN__]);
-		if (ft_strlen(db->rein[i]) == 1)
-			db->fd[STDIN__] = open(db->rein[i + 1], O_RDONLY);
+		if (ft_strlen(db->ri[i]) == 1)
+			db->fd[STDIN__] = open(db->ri[i + 1], O_RDONLY);
 		else
 			heredoc(db);
 		if (db->fd[STDIN__] == -1)
@@ -54,16 +54,16 @@ static void	reout(t_db *db)
 	t_i32	i;
 
 	i = 0;
-	while (i < db->reout_len)
+	while (i < db->ro_len)
 	{
 		if (db->fd[STDOUT__] > STDERR__)
 			close(db->fd[STDOUT__]);
-		if (ft_strlen(db->reout[i]) == 1)
+		if (ft_strlen(db->ro[i]) == 1)
 			db->fd[STDOUT__] = open(
-					db->rein[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+					db->ri[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else
 			db->fd[STDOUT__] = open(
-					db->rein[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+					db->ri[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (db->fd[STDIN__] == -1)
 		{
 			db->errno = ERRNO_FILEFAIL;

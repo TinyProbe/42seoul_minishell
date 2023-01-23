@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:11:45 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/19 16:08:30 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 01:21:55 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ static t_i32	cmdcpy(t_db *db, t_i8 *cmd);
 
 void	minish(t_db *db)
 {
-	while (db->rtn != EXIT)
+	while (TRUE)
 	{
 		if (cmdread(db))
 			continue ;
 		sigtoggle(db);
-		process(db);
-		output(db, db->fd[STDOUT__], db->fd[STDERR__]);
+		subsh(db);
 		sigtoggle(db);
 	}
 }

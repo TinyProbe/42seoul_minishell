@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/21 19:03:59 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/23 07:05:07 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,11 @@ SRC = main.c\
 	  valid.c\
 	  error.c\
 	  execute.c\
-	  substi.c\
-	  replace.c\
+	  substitution.c\
+	  repl_cmd.c\
+	  repl_env.c\
+	  repl_wild.c\
+	  apply.c\
 	  process.c\
 	  parent.c\
 	  child.c\

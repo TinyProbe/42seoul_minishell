@@ -6,40 +6,42 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:54:12 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/15 20:22:52 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 03:32:25 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-t_i32	check(t_db *db)
+void	check(t_db *db)
 {
 	t_i32	i;
 
 	i = -1;
 	while (++i < db->len)
+	{
 		if (db->cmd[i] == '(' || db->cmd[i] == ')')
-			bracket(db, i);
+			bracket(db, db->cmd, i);
 		else if (db->cmd[i] == '\'')
 			quote(db);
 		else if (db->cmd[i] == '"')
 			claw(db);
 		else if (db->cmd[i] == '\\')
 			db->errno = ERRNO_RESTRICT;
-	if (!(db->errno) && db->stk_len)
+		if (db->errno)
+			error(db);
+	}
+	if (db->stk_len)
 		db->errno = ERRNO_FORMAT;
-	if (db->errno)
-		return (-1);
-	return (0);
+	error(db);
 }
 
-void	bracket(t_db *db, t_i32 i)
+void	bracket(t_db *db, t_i8 *s, t_i32 i)
 {
 	if (db->stk_len && db->stk[db->stk_len - 1] == '\'')
 		return ;
-	if (db->cmd[i] == '(')
+	if (s[i] == '(')
 	{
-		if ((i > 0 && db->cmd[i - 1] == '$')
+		if ((i > 0 && s[i - 1] == '$')
 				|| (!(db->stk_len) || db->stk[db->stk_len - 1] == '('))
 			db->stk[db->stk_len++] = '(';
 	}

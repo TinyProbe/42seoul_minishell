@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/22 01:00:11 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 06:59:55 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -29,7 +30,7 @@
 # define BUF_MAX	100000
 # define ARG_MAX	10000
 # define REDIR_MAX	10000
-# define TOOL_MAX	10000
+# define REPL_MAX	10000
 # define PROMPT		"minish> "
 
 typedef enum e_sigstat
@@ -59,7 +60,7 @@ typedef enum e_conj
 	CONJ_OR,
 	CONJ_OROR,
 }	t_conj;
-typedef enum e_program
+typedef enum e_prog
 {
 	PROG_NONE,
 	PROG_SUBSH,
@@ -70,16 +71,29 @@ typedef enum e_program
 	PROG_UNSET,
 	PROG_ENV,
 	PROG_EXIT,
-}	t_program;
+}	t_prog;
+typedef enum e_type
+{
+	TYPE_NONE,
+	TYPE_ENV,
+	TYPE_ENV_RTN,
+	TYPE_CMD,
+}	t_type;
 
-typedef struct s_tool
+typedef struct s_tkn
+{
+	t_i8	*_;
+	t_i32	len;
+}	t_tkn;
+typedef struct s_repl
 {
 	t_i32	l;
 	t_i32	r;
 	t_i32	last;
-	t_i8	*res;
+	t_type	type;
+	t_i8	*_;
 	t_i32	len;
-}	t_tool;
+}	t_repl;
 typedef struct s_db
 {
 	t_sigstat	sigstat;
@@ -90,7 +104,7 @@ typedef struct s_db
 	t_i32		len;
 	t_i8		stk[STK_MAX];
 	t_i32		stk_len;
-	t_i8		*tkn[TKN_MAX];
+	t_tkn		tkn[TKN_MAX];
 	t_i32		tkn_len;
 	t_i8		proc[PROC_MAX];
 	t_i32		proc_len;
@@ -100,17 +114,17 @@ typedef struct s_db
 	t_i32		buf_len;
 	t_i32		fd[3];
 	t_i32		rtn;
-	t_i32		arg_begin;
-	t_i32		arg_end;
+	t_i32		arg_b;
+	t_i32		arg_e;
 	t_i8		*av[ARG_MAX];
 	t_i32		ac;
-	t_i8		*rein[REDIR_MAX];
-	t_i32		rein_len;
-	t_i8		*reout[REDIR_MAX];
-	t_i32		reout_len;
+	t_i8		*ri[REDIR_MAX];
+	t_i32		ri_len;
+	t_i8		*ro[REDIR_MAX];
+	t_i32		ro_len;
 	t_conj		conj;
-	t_tool		tool[TOOL_MAX];
-	t_i32		tool_len;
+	t_repl		repl[REPL_MAX];
+	t_i32		repl_len;
 }	t_db;
 
 void	sigtoggle(t_db *db);
@@ -136,28 +150,30 @@ void	export__(t_db *db);
 void	unset(t_db *db);
 void	env(t_db *db);
 void	exit__(t_db *db);
+void	exec_file(t_db *db);
 
-t_i32	check(t_db *db);
-void	bracket(t_db *db, t_i32 i);
+void	check(t_db *db);
+void	bracket(t_db *db, t_i8 *s, t_i32 i);
 void	quote(t_db *db);
 void	claw(t_db *db);
 
-t_i32	token(t_db *db);
+void	token(t_db *db);
 void	untoken(t_db *db);
 
-t_i32	valid(t_db *db);
+void	valid(t_db *db);
 
 void	error(t_db *db);
 
 void	execute(t_db *db);
 
-void	substi(t_db *db);
+void	substitution(t_db *db);
 void	repl_env(t_db *db);
 void	repl_cmd(t_db *db);
+void	apply_repl(t_db *db);
 void	repl_wild(t_db *db);
 
 void	recwd(t_db *db);
 void	output(t_db *db, t_i32 out, t_i32 err);
-void	untool(t_db *db);
+void	unrepl(t_db *db);
 
 #endif
