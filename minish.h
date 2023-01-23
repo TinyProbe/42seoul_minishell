@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 06:59:55 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:44:47 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	error(t_db *db);
 
 void	execute(t_db *db);
 
-void	substitution(t_db *db);
+void	subst(t_db *db);
 void	repl_env(t_db *db);
 void	repl_cmd(t_db *db);
 void	apply_repl(t_db *db);

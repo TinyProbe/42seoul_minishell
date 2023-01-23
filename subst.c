@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   substi.c                                           :+:      :+:    :+:   */
+/*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:29:50 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 07:01:11 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:44:56 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	check_stack(t_db *db);
 static void	setrange(t_db *db);
 static void	wildcard(t_db *db);
 
-void	substitution(t_db *db)
+void	subst(t_db *db)
 {
 	db->repl[db->repl_len].l = -1;
 	db->repl[db->repl_len].r = -1;

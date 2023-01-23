@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 07:00:13 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:45:05 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	extract(t_db *db)
 {
 	while (db->arg_b < db->arg_e)
 	{
-		substitution(db);
+		subst(db);
 		if (db->tkn[db->arg_b]._[0] == '<' || db->ri_len & 1)
 			db->ri[db->ri_len++] = db->tkn[db->arg_b]._;
 		else if (db->tkn[db->arg_b]._[0] == '>' || db->ro_len & 1)
