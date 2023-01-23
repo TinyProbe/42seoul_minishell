@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 09:44:47 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:58:48 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	export__(t_db *db);
 void	unset(t_db *db);
 void	env(t_db *db);
 void	exit__(t_db *db);
-void	exec_file(t_db *db);
+void	file_exe(t_db *db);
 
 void	check(t_db *db);
 void	bracket(t_db *db, t_i8 *s, t_i32 i);

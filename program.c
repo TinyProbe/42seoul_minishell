@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:51:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 09:51:40 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/23 09:58:34 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	program(t_db *db)
 	else if (db->ac && db->av[0][0] == '(')
 		subsh2(db);
 	else if (db->ac && db->av[0][0] == '.')
-		exec_file(db);
+		file_exe(db);
 }
 
 static void	subsh2(t_db *db)
