@@ -6,66 +6,65 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 09:45:05 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:44:59 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_db *db);
-static void	setrange(t_db *db);
-static void	extract(t_db *db);
+static void	init(t_z *z);
+static void	setrange(t_z *z);
+static void	extract(t_z *z);
 
-void	execute(t_db *db)
+void	execute(t_z *z)
 {
-	while (db->arg_b < db->tkn_len)
+	while (z->ab < z->tkn_len)
 	{
-		init(db);
-		setrange(db);
-		extract(db);
-		if ((db->conj == CONJ_ANDAND && db->rtn)
-				|| (db->conj == CONJ_OROR && !(db->rtn)))
+		init(z);
+		setrange(z);
+		extract(z);
+		if ((z->conj == CONJ_ANDAND && z->rtn)
+				|| (z->conj == CONJ_OROR && !(z->rtn)))
 			continue ;
-		db->len = 0;
-		process(db);
+		z->len = 0;
+		process(z);
 	}
 }
 
-static void	init(t_db *db)
+static void	init(t_z *z)
 {
-	db->ac = 0;
-	db->ri_len = 0;
-	db->ro_len = 0;
-	db->conj = CONJ_NONE;
+	z->ac = 0;
+	z->ri_len = 0;
+	z->ro_len = 0;
+	z->conj = CONJ_NONE;
 }
 
-static void	setrange(t_db *db)
+static void	setrange(t_z *z)
 {
-	while (db->arg_e < db->tkn_len)
+	while (z->ae < z->tkn_len)
 	{
-		if (db->arg_b != db->arg_e
-				&& (db->tkn[db->arg_e]._[0] == '|'
-					|| db->tkn[db->arg_e]._[0] == '&'))
+		if (z->ab != z->ae && (z->tkn[z->ae]._[0] == '|'
+					|| z->tkn[z->ae]._[0] == '&'))
 			break ;
-		db->arg_e++;
+		z->ae++;
 	}
 }
 
-static void	extract(t_db *db)
+static void	extract(t_z *z)
 {
-	while (db->arg_b < db->arg_e)
+	while (z->ab < z->ae)
 	{
-		subst(db);
-		if (db->tkn[db->arg_b]._[0] == '<' || db->ri_len & 1)
-			db->ri[db->ri_len++] = db->tkn[db->arg_b]._;
-		else if (db->tkn[db->arg_b]._[0] == '>' || db->ro_len & 1)
-			db->ro[db->ro_len++] = db->tkn[db->arg_b]._;
-		else if (db->tkn[db->arg_b]._[0] == '|')
-			db->conj = CONJ_OR + (db->tkn[db->arg_b].len == 2);
-		else if (db->tkn[db->arg_b]._[0] == '&')
-			db->conj = CONJ_ANDAND;
+		subst(z);
+		if (z->tkn[z->ab]._[0] == '<' || z->ri_len & 1)
+			z->ri[z->ri_len++] = z->tkn[z->ab]._;
+		else if (z->tkn[z->ab]._[0] == '>' || z->ro_len & 1)
+			z->ro[z->ro_len++] = z->tkn[z->ab]._;
+		else if (z->tkn[z->ab]._[0] == '|')
+			z->conj = CONJ_OR + (z->tkn[z->ab].len == 2);
+		else if (z->tkn[z->ab]._[0] == '&')
+			z->conj = CONJ_ANDAND;
 		else
-			db->av[db->ac++] = db->tkn[db->arg_b]._;
-		db->arg_b++;
+			z->av[z->ac++] = z->tkn[z->ab]._;
+		z->ab++;
 	}
 }

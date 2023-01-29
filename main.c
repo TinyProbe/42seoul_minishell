@@ -6,55 +6,55 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 06:29:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 14:43:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_db *db);
-static void	seterr(t_db *db);
+static void	init(t_z *z);
+static void	seterr(t_z *z);
 
 t_i32	main(void)
 {
-	t_db	db;
+	t_z	z;
 
-	init(&db);
-	minish(&db);
+	init(&z);
+	minish(&z);
 	exit(0);
 }
 
-static void	init(t_db *db)
+static void	init(t_z *z)
 {
-	db->sigstat = SIGS_PROCCMD;
-	sigtoggle(db);
-	seterr(db);
-	db->errarg = NULL;
-	db->errno = ERRNO_NONE;
-	db->len = 0;
-	db->stk_len = 0;
-	db->tkn_len = 0;
-	db->proc_len = ft_strcpy(db->proc, "minish: ");
-	db->buf_len = 0;
-	db->fd[STDIN__] = STDIN__;
-	db->fd[STDOUT__] = STDOUT__;
-	db->fd[STDERR__] = STDERR__;
-	db->rtn = 0;
-	db->ac = 0;
-	db->ri_len = 0;
-	db->ro_len = 0;
-	db->conj = CONJ_NONE;
-	db->repl_len = 0;
+	z->sigstat = SIGS_PROCCMD;
+	sigtoggle(z);
+	seterr(z);
+	z->errarg = NULL;
+	z->errno = ERRNO_NONE;
+	z->len = 0;
+	z->stk_len = 0;
+	z->tkn_len = 0;
+	z->proc_len = ft_strcpy(z->proc, "minish: ");
+	z->buf_len = 0;
+	z->fd[STDIN__] = STDIN__;
+	z->fd[STDOUT__] = STDOUT__;
+	z->fd[STDERR__] = STDERR__;
+	z->rtn = 0;
+	z->ac = 0;
+	z->ri_len = 0;
+	z->ro_len = 0;
+	z->conj = CONJ_NONE;
+	z->repl_len = 0;
 }
 
-static void	seterr(t_db *db)
+static void	seterr(t_z *z)
 {
-	db->errmsg[ERRNO_FORMAT] = "syntax error near unexpected token.";
-	db->errmsg[ERRNO_RESTRICT] = "Restricted function.";
-	db->errmsg[ERRNO_LONGCMD] = "Command too long.";
-	db->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
-	db->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
-	db->errmsg[ERRNO_FILEFAIL] = "File open failed.";
-	db->errmsg[ERRNO_NOCMD] = "command not found.";
-	db->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
+	z->errmsg[ERRNO_FORMAT] = "syntax error near unexpected token.";
+	z->errmsg[ERRNO_RESTRICT] = "Restricted function.";
+	z->errmsg[ERRNO_LONGCMD] = "Command too long.";
+	z->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
+	z->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
+	z->errmsg[ERRNO_FILEFAIL] = "File open failed.";
+	z->errmsg[ERRNO_NOCMD] = "command not found.";
+	z->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
 }

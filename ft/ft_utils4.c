@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:57:29 by tkong             #+#    #+#             */
-/*   Updated: 2022/10/28 10:13:31 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 06:38:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_i32	ft_tolower(t_i32 c)
 {
-	if (c == -1 || c >= 256)
-		return (c);
+	if (c < 0 || c > 255)
+		return (0);
 	if (c >= 'A' && c <= 'Z')
 		return (c + ('a' - 'A'));
 	return (c);
@@ -23,8 +23,8 @@ t_i32	ft_tolower(t_i32 c)
 
 t_i32	ft_toupper(t_i32 c)
 {
-	if (c == -1 || c >= 256)
-		return (c);
+	if (c < 0 || c > 255)
+		return (0);
 	if (c >= 'a' && c <= 'z')
 		return (c - ('a' - 'A'));
 	return (c);

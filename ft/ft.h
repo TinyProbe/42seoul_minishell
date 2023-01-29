@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:39:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/22 00:08:50 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:15:51 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+typedef struct s_node
+{
+	struct s_node	*l;
+	struct s_node	*r;
+	void			*e;
+}	t_node;
+typedef struct s_bdll
+{
+	t_node	*hd;
+	t_i32	len;
+}	t_bdll;
 
 void	ft_putchar_fd(t_i8 c, t_i32 fd);
 void	ft_putendl_fd(const t_i8 *s, t_i32 fd);
@@ -101,7 +112,7 @@ t_i8	*ft_strndup(const t_i8 *s1, size_t n);
 t_i8	*ft_strslice(const t_i8 *s1, t_i32 begin, t_i32 end);
 t_i8	*ft_strjoin(t_i8 const *s1, t_i8 const *s2);
 t_i8	*ft_strtrim(t_i8 const *s1, t_i8 const *set);
-t_i32	ft_strdel(t_i8 *dst, t_i8 const *set);
+t_i32	ft_strdel(t_i8 *dst, const t_i8 *set);
 t_i8	*ft_substr(t_i8 const *s, t_u32 start, size_t len);
 t_i8	**ft_split(t_i8 const *s, t_i8 c);
 void	ft_sort_i8(t_i8 *arr, t_i32 begin, t_i32 end);
@@ -133,5 +144,15 @@ t_f64	ft_sqrt(t_f64 n);
 t_i32	ft_isprime(t_u64 n);
 t_i32	ft_printf(const t_i8 *format, ...);
 t_i8	*ft_gnl(t_i32 fd);
+void	ft_pushf(t_bdll *bdll, void *e);
+void	ft_pushb(t_bdll *bdll, void *e);
+void	*ft_popf(t_bdll *bdll);
+void	*ft_popb(t_bdll *bdll);
+void	*ft_popat(t_bdll *bdll, t_i32 idx);
+void	*ft_front(t_bdll *bdll);
+void	*ft_back(t_bdll *bdll);
+t_node	*ft_search(t_bdll *bdll, t_i32 idx);
+void	*ft_at(t_bdll *bdll, t_i32 idx);
+void	ft_setat(t_bdll *bdll, t_i32 idx, void *e);
 
 #endif

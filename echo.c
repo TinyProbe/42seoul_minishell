@@ -6,13 +6,13 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/20 23:54:48 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:49:11 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	echo(t_db *db)
+void	echo(t_z *z)
 {
-	(void) db;
+	test(z);
 }

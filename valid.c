@@ -6,91 +6,92 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:10:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 06:22:54 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:49:11 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	conjunct_deadline(t_db *db);
-static void	conjunct_format(t_db *db, t_i32 i);
-static void	conjunct_match(t_db *db, t_i32 i);
-static void	redirect_match(t_db *db, t_i32 i);
+static void	conjunct_deadline(t_z *z);
+static void	conjunct_format(t_z *z, t_i32 i);
+static void	conjunct_match(t_z *z, t_i32 i);
+static void	redirect_match(t_z *z, t_i32 i);
 
-void	valid(t_db *db)
+void	valid(t_z *z)
 {
 	t_i32	i;
 
 	i = -1;
-	conjunct_deadline(db);
-	while (++i < db->tkn_len)
+	if (z->tkn_len)
+		conjunct_deadline(z);
+	while (++i < z->tkn_len)
 	{
-		conjunct_format(db, i);
-		conjunct_match(db, i);
-		redirect_match(db, i);
+		conjunct_format(z, i);
+		conjunct_match(z, i);
+		redirect_match(z, i);
 	}
 }
 
-static void	conjunct_deadline(t_db *db)
+static void	conjunct_deadline(t_z *z)
 {
-	if (db->tkn[0]._[0] == '|'
-			|| db->tkn[0]._[0] == '&'
-			|| db->tkn[0]._[0] == ';')
-		db->errarg = db->tkn[0]._;
-	else if (db->tkn[db->tkn_len - 1]._[0] == '|'
-			|| db->tkn[db->tkn_len - 1]._[0] == '&'
-			|| db->tkn[db->tkn_len - 1]._[0] == ';')
-		db->errarg = db->tkn[db->tkn_len - 1]._;
-	if (db->errarg)
-		db->errno = ERRNO_FORMAT;
-	error(db);
+	if (z->tkn[0]._[0] == '|'
+			|| z->tkn[0]._[0] == '&'
+			|| z->tkn[0]._[0] == ';')
+		z->errarg = z->tkn[0]._;
+	else if (z->tkn[z->tkn_len - 1]._[0] == '|'
+			|| z->tkn[z->tkn_len - 1]._[0] == '&'
+			|| z->tkn[z->tkn_len - 1]._[0] == ';')
+		z->errarg = z->tkn[z->tkn_len - 1]._;
+	if (z->errarg)
+		z->errno = ERRNO_FORMAT;
+	error(z);
 }
 
-static void	conjunct_format(t_db *db, t_i32 i)
+static void	conjunct_format(t_z *z, t_i32 i)
 {
-	if (db->tkn[i]._[0] == '|' && db->tkn[i].len > 2)
-		db->errno = ERRNO_FORMAT;
-	else if (db->tkn[i]._[0] == '&' || db->tkn[i]._[0] == ';')
+	if (z->tkn[i]._[0] == '|' && z->tkn[i].len > 2)
+		z->errno = ERRNO_FORMAT;
+	else if (z->tkn[i]._[0] == '&' || z->tkn[i]._[0] == ';')
 	{
-		if (db->tkn[i].len == 1)
-			db->errno = ERRNO_RESTRICT;
-		else if (db->tkn[i].len > 1 + (db->tkn[i]._[0] == '&'))
-			db->errno = ERRNO_FORMAT;
+		if (z->tkn[i].len == 1)
+			z->errno = ERRNO_RESTRICT;
+		else if (z->tkn[i].len > 1 + (z->tkn[i]._[0] == '&'))
+			z->errno = ERRNO_FORMAT;
 	}
-	if (db->errno)
-		db->errarg = db->tkn[i]._;
-	error(db);
+	if (z->errno)
+		z->errarg = z->tkn[i]._;
+	error(z);
 }
 
-static void	conjunct_match(t_db *db, t_i32 i)
+static void	conjunct_match(t_z *z, t_i32 i)
 {
-	if (db->tkn[i]._[0] == '|'
-			|| db->tkn[i]._[0] == '&'
-			|| db->tkn[i]._[0] == ';')
+	if (z->tkn[i]._[0] == '|'
+			|| z->tkn[i]._[0] == '&'
+			|| z->tkn[i]._[0] == ';')
 	{
-		if (i < db->tkn_len - 1 && (db->tkn[i + 1]._[0] == '|'
-					|| db->tkn[i + 1]._[0] == '&'
-					|| db->tkn[i + 1]._[0] == ';'))
+		if (i < z->tkn_len - 1 && (z->tkn[i + 1]._[0] == '|'
+					|| z->tkn[i + 1]._[0] == '&'
+					|| z->tkn[i + 1]._[0] == ';'))
 		{
-			db->errno = ERRNO_FORMAT;
-			db->errarg = db->tkn[i + 1]._;
+			z->errno = ERRNO_FORMAT;
+			z->errarg = z->tkn[i + 1]._;
 		}
 	}
-	error(db);
+	error(z);
 }
 
-static void	redirect_match(t_db *db, t_i32 i)
+static void	redirect_match(t_z *z, t_i32 i)
 {
-	if (db->tkn[i]._[0] == '<' || db->tkn[i]._[0] == '>')
+	if (z->tkn[i]._[0] == '<' || z->tkn[i]._[0] == '>')
 	{
-		if (!(i < db->tkn_len - 1)
-				|| (db->tkn[i + 1]._[0] == '|' || db->tkn[i + 1]._[0] == '&'
-					|| db->tkn[i + 1]._[0] == ';' || db->tkn[i + 1]._[0] == '<'
-					|| db->tkn[i + 1]._[0] == '>' || db->tkn[i + 1]._[0] == '('))
+		if (!(i < z->tkn_len - 1)
+				|| (z->tkn[i + 1]._[0] == '|' || z->tkn[i + 1]._[0] == '&'
+					|| z->tkn[i + 1]._[0] == ';' || z->tkn[i + 1]._[0] == '<'
+					|| z->tkn[i + 1]._[0] == '>' || z->tkn[i + 1]._[0] == '('))
 		{
-			db->errno = ERRNO_FORMAT;
-			db->errarg = db->tkn[i + (i < db->tkn_len - 1)]._;
+			z->errno = ERRNO_FORMAT;
+			z->errarg = z->tkn[i + (i < z->tkn_len - 1)]._;
 		}
 	}
-	error(db);
+	error(z);
 }

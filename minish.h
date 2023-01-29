@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 09:58:48 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:56:14 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef enum e_type
 	TYPE_CMD,
 }	t_type;
 
+typedef struct dirent t_dirent;
 typedef struct s_tkn
 {
 	t_i8	*_;
@@ -87,14 +88,14 @@ typedef struct s_tkn
 }	t_tkn;
 typedef struct s_repl
 {
+	t_i8	*_;
+	t_i32	len;
 	t_i32	l;
 	t_i32	r;
 	t_i32	last;
 	t_type	type;
-	t_i8	*_;
-	t_i32	len;
 }	t_repl;
-typedef struct s_db
+typedef struct s_z
 {
 	t_sigstat	sigstat;
 	const t_i8	*errmsg[ERRNO_MAX];
@@ -114,8 +115,8 @@ typedef struct s_db
 	t_i32		buf_len;
 	t_i32		fd[3];
 	t_i32		rtn;
-	t_i32		arg_b;
-	t_i32		arg_e;
+	t_i32		ab;
+	t_i32		ae;
 	t_i8		*av[ARG_MAX];
 	t_i32		ac;
 	t_i8		*ri[REDIR_MAX];
@@ -125,55 +126,61 @@ typedef struct s_db
 	t_conj		conj;
 	t_repl		repl[REPL_MAX];
 	t_i32		repl_len;
-}	t_db;
+}	t_z;
 
-void	sigtoggle(t_db *db);
+void	sigtoggle(t_z *z);
 void	sigint_rl(t_i32 sig);
 void	sigint(t_i32 sig);
 void	sigterm(t_i32 sig);
 void	sigquit(t_i32 sig);
 
-void	process(t_db *db);
-void	parent(t_db *db, t_i32 *fd, pid_t pid);
-void	child(t_db *db, t_i32 *fd);
+void	process(t_z *z);
+void	parent(t_z *z, t_i32 *fd, pid_t pid);
+void	child(t_z *z, t_i32 *fd);
 
-void	redirect(t_db *db);
+void	redirect(t_z *z);
 
-void	minish(t_db *db);
+void	minish(t_z *z);
 
-void	program(t_db *db);
-void	subsh(t_db *db);
-void	echo(t_db *db);
-void	cd(t_db *db);
-void	pwd(t_db *db);
-void	export__(t_db *db);
-void	unset(t_db *db);
-void	env(t_db *db);
-void	exit__(t_db *db);
-void	file_exe(t_db *db);
+void	program(t_z *z);
+void	subsh(t_z *z);
+void	echo(t_z *z);
+void	cd(t_z *z);
+void	pwd(t_z *z);
+void	export__(t_z *z);
+void	unset(t_z *z);
+void	env(t_z *z);
+void	exit__(t_z *z);
+void	file_exe(t_z *z);
 
-void	check(t_db *db);
-void	bracket(t_db *db, t_i8 *s, t_i32 i);
-void	quote(t_db *db);
-void	claw(t_db *db);
+void	check(t_z *z);
+void	bracket(t_z *z, t_i8 *s, t_i32 i);
+void	quote(t_z *z);
+void	claw(t_z *z);
 
-void	token(t_db *db);
-void	untoken(t_db *db);
+void	token(t_z *z);
+void	untoken(t_z *z);
 
-void	valid(t_db *db);
+void	valid(t_z *z);
 
-void	error(t_db *db);
+void	error(t_z *z);
 
-void	execute(t_db *db);
+void	execute(t_z *z);
 
-void	subst(t_db *db);
-void	repl_env(t_db *db);
-void	repl_cmd(t_db *db);
-void	apply_repl(t_db *db);
-void	repl_wild(t_db *db);
+void	subst(t_z *z);
+void	repl_env(t_z *z);
+void	repl_cmd(t_z *z);
+void	apply_repl(t_z *z);
+void	repl_wild(t_z *z);
+void	join(t_z *z, t_i8 *path, t_bdll *bdll);
 
-void	recwd(t_db *db);
-void	output(t_db *db, t_i32 out, t_i32 err);
-void	unrepl(t_db *db);
+void	recwd(t_z *z);
+void	output(t_z *z, t_i32 out, t_i32 err);
+void	unrepl(t_z *z);
+t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
+t_i8	*getfile(t_i8 *arg, t_i32 len);
+t_bool	isincl(t_i8 *cur, t_i8 *file);
+
+void	test(t_z *z);
 
 #endif

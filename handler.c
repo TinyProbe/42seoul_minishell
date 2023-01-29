@@ -6,24 +6,24 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:05:59 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/21 04:50:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 14:43:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	sigtoggle(t_db *db)
+void	sigtoggle(t_z *z)
 {
-	if (db->sigstat == SIGS_WAITCMD)
+	if (z->sigstat == SIGS_WAITCMD)
 	{
-		db->sigstat = SIGS_PROCCMD;
+		z->sigstat = SIGS_PROCCMD;
 		signal(SIGINT, sigint);
 		signal(SIGTERM, sigterm);
 		signal(SIGQUIT, sigquit);
 	}
-	else if (db->sigstat == SIGS_PROCCMD)
+	else if (z->sigstat == SIGS_PROCCMD)
 	{
-		db->sigstat = SIGS_WAITCMD;
+		z->sigstat = SIGS_WAITCMD;
 		signal(SIGINT, sigint_rl);
 		signal(SIGTERM, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);

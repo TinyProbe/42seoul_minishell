@@ -6,39 +6,39 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:33 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 02:48:31 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 14:43:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	display(t_db *db);
+static void	display(t_z *z);
 
-void	error(t_db *db)
+void	error(t_z *z)
 {
-	if (db->errno == ERRNO_NONE)
+	if (z->errno == ERRNO_NONE)
 		return ;
-	display(db);
-	if (db->fd[STDERR__] != STDERR__)
-		exit(db->errno);
-	db->rtn = db->errno;
-	db->errno = 0;
-	db->errarg = NULL;
+	display(z);
+	if (z->fd[STDERR__] != STDERR__)
+		exit(z->errno);
+	z->rtn = z->errno;
+	z->errno = 0;
+	z->errarg = NULL;
 }
 
-static void	display(t_db *db)
+static void	display(t_z *z)
 {
 	t_i8	err;
 
 	err = STDERR__;
-	write(db->fd[STDERR__], db->proc, db->proc_len);
-	if (db->errarg)
+	write(z->fd[STDERR__], z->proc, z->proc_len);
+	if (z->errarg)
 	{
-		write(db->fd[STDERR__], db->errarg, ft_strlen(db->errarg));
-		write(db->fd[STDERR__], ": ", 2);
+		write(z->fd[STDERR__], z->errarg, ft_strlen(z->errarg));
+		write(z->fd[STDERR__], ": ", 2);
 	}
-	write(db->fd[STDERR__], db->errmsg[db->errno],
-			ft_strlen(db->errmsg[db->errno]));
-	write(db->fd[STDERR__], "\n", 1);
-	write(db->fd[STDERR__], &err, 1);
+	write(z->fd[STDERR__], z->errmsg[z->errno],
+			ft_strlen(z->errmsg[z->errno]));
+	write(z->fd[STDERR__], "\n", 1);
+	write(z->fd[STDERR__], &err, 1);
 }

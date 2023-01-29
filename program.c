@@ -6,44 +6,44 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:51:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/23 09:58:34 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:46:03 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	subsh2(t_db *db);
+static void	subsh2(t_z *z);
 
-void	program(t_db *db)
+void	program(t_z *z)
 {
-	if (db->len)
-		subsh(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "echo"))
-		echo(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "cd"))
-		cd(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "pwd"))
-		pwd(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "export"))
-		export__(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "unset"))
-		unset(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "env"))
-		env(db);
-	else if (db->ac && !ft_strcmp(db->av[0], "exit"))
-		exit__(db);
-	else if (db->ac && db->av[0][0] == '(')
-		subsh2(db);
-	else if (db->ac && db->av[0][0] == '.')
-		file_exe(db);
+	if (z->len)
+		subsh(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "echo"))
+		echo(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "cd"))
+		cd(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "pwd"))
+		pwd(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "export"))
+		export__(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "unset"))
+		unset(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "env"))
+		env(z);
+	else if (z->ac && !ft_strcmp(z->av[0], "exit"))
+		exit__(z);
+	else if (z->ac && z->av[0][0] == '(')
+		subsh2(z);
+	else if (z->ac && z->av[0][0] == '.')
+		file_exe(z);
 }
 
-static void	subsh2(t_db *db)
+static void	subsh2(t_z *z)
 {
-	if (db->ac > 1)
-		db->errno = ERRNO_FORMAT;
-	error(db);
-	db->len = ft_strlen(db->av[0]) - 2;
-	ft_memcpy(db->cmd, db->av[0] + 1, db->len);
-	subsh(db);
+	if (z->ac > 1)
+		z->errno = ERRNO_FORMAT;
+	error(z);
+	z->len = ft_strlen(z->av[0]) - 2;
+	ft_memcpy(z->cmd, z->av[0] + 1, z->len);
+	subsh(z);
 }

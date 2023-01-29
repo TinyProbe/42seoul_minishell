@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/23 09:45:26 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/29 15:58:48 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = main.c\
 	  repl_cmd.c\
 	  repl_env.c\
 	  repl_wild.c\
+	  join.c\
 	  apply.c\
 	  process.c\
 	  parent.c\
@@ -43,7 +44,10 @@ SRC = main.c\
 	  unset.c\
 	  env.c\
 	  exit.c\
+	  file_exe.c\
 	  util.c\
+	  util2.c\
+	  util3.c\
 	  handler.c
 
 ifdef B
