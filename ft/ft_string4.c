@@ -6,72 +6,63 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:57:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 12:02:34 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:02:56 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-static t_i8		*trim(const t_i8 *s, t_i8 c);
-static size_t	split(const t_i8 *trimmed, t_i8 **buf, t_i8 c);
-
 t_i8	**ft_split(t_i8 const *s, t_i8 c)
 {
-	t_i8	*trimmed;
 	t_i8	*buf[100000];
-	size_t	num;
+	t_i32	len;
+	t_i32	l;
+	t_i32	r;
 
-	trimmed = trim(s, c);
-	if (!trimmed)
-		return ((t_i8 **) 0);
-	num = split(trimmed, buf, c);
-	free(trimmed);
-	return (ft_memcpy((t_i8 **) malloc(sizeof(t_i8 *) * (num + 1)), buf,
-			sizeof(t_i8 *) * (num + 1)));
+	len = 0;
+	l = 0;
+	r = -1;
+	while (s[++r])
+	{
+		if (s[r] == c)
+		{
+			if (l < r)
+				buf[len++] = ft_strndup(s + l, r - l);
+			l = r + 1;
+		}
+	}
+	if (l < r)
+		buf[len++] = ft_strndup(s + l, r - l);
+	buf[len++] = NULL;
+	return (ft_memcpy(malloc(sizeof(t_i8 *) * len), buf, sizeof(t_i8 *) * len));
 }
 
-static t_i8	*trim(const t_i8 *s, t_i8 c)
+size_t	ft_strcpy(t_i8 *dst, const t_i8 *src)
 {
-	t_i8	*dst;
-	t_i8	set[2];
-	t_i32	i[2];
+	size_t	i;
 
-	*(t_u16 *) set = (t_u16) c;
-	dst = ft_strtrim(s, set);
-	if (!dst)
-		return (dst);
-	*(t_i64 *) i = (t_i64) 0;
-	while (dst[i[0]])
-	{
-		if (dst[i[0]] == c && dst[i[0] - 1] == c)
-			while (dst[i[0]] == c)
-				++i[0];
-		if (i[0] ^ i[1])
-			dst[i[1]] = dst[i[0]];
-		++i[0];
-		++i[1];
-	}
-	dst[i[1]] = '\0';
-	return (dst);
+	i = -1;
+	while (src[++i])
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (i);
 }
 
-static size_t	split(const t_i8 *trimmed, t_i8 **buf, t_i8 c)
+t_i32	ft_strdel(t_i8 *dst, const t_i8 *set)
 {
-	t_u64	p1;
-	t_u64	p2;
-	size_t	num;
+	t_u8	code[CODE_SIZE];
+	t_i32	i;
+	t_i32	j;
 
-	p1 = (t_u64) trimmed;
-	p2 = (t_u64) ft_memchr((t_i8 *) p1, c, ft_strlen((t_i8 *) p1));
-	num = 0;
-	while (p2)
-	{
-		buf[num++] = ft_substr((t_i8 *) p1, 0, p2 - p1);
-		p1 = p2 + 1;
-		p2 = (t_u64) ft_memchr((t_i8 *) p1, c, ft_strlen((t_i8 *) p1));
-	}
-	if (*(t_i8 *) p1)
-		buf[num++] = ft_strdup((t_i8 *) p1);
-	buf[num] = (t_i8 *) 0;
-	return (num);
+	ft_bzero(code, CODE_SIZE);
+	i = -1;
+	while (set[++i])
+		code[(t_i32) set[i]] = TRUE;
+	i = 0;
+	j = -1;
+	while (dst[++j])
+		if (!code[(t_i32) dst[j]])
+			dst[i++] = dst[j];
+	dst[i] = '\0';
+	return (i);
 }

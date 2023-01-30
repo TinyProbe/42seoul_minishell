@@ -6,56 +6,56 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 11:06:39 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:49:38 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_z *z);
-static void	seterr(t_z *z);
+static void	init(t_a *a);
+static void	seterr(t_a *a);
 
 t_i32	main(void)
 {
-	t_z	z;
+	t_a	a;
 
-	init(&z);
-	minish(&z);
+	init(&a);
+	minish(&a);
 	exit(0);
 }
 
-static void	init(t_z *z)
+static void	init(t_a *a)
 {
-	z->sigstat = SIGS_PROCCMD;
-	sigtoggle(z);
-	seterr(z);
-	z->errarg = NULL;
-	z->errno = ERRNO_NONE;
-	z->len = 0;
-	z->stk_len = 0;
-	z->tkn_len = 0;
-	z->proc_len = ft_strcpy(z->proc, "minish: ");
-	recwd(z);
-	z->buf_len = 0;
-	z->fd[STDIN__] = STDIN__;
-	z->fd[STDOUT__] = STDOUT__;
-	z->fd[STDERR__] = STDERR__;
-	z->rtn = 0;
-	z->ac = 0;
-	z->ri_len = 0;
-	z->ro_len = 0;
-	z->conj = CONJ_NONE;
-	z->repl_len = 0;
+	a->sigstat = SIGS_PROCCMD;
+	sigtoggle(a);
+	seterr(a);
+	a->errarg = NULL;
+	a->errno = ERRNO_NONE;
+	a->cmd_l = 0;
+	a->stk_l = 0;
+	a->tkn_l = 0;
+	a->proc_l = ft_strcpy(a->proc, "minish: ");
+	recwd(a);
+	a->buf_l = 0;
+	a->fd[STDIN__] = STDIN__;
+	a->fd[STDOUT__] = STDOUT__;
+	a->fd[STDERR__] = STDERR__;
+	a->rtn = 0;
+	a->ac = 0;
+	a->ri_l = 0;
+	a->ro_l = 0;
+	a->conj = CONJ_NONE;
+	a->rp_l = 0;
 }
 
-static void	seterr(t_z *z)
+static void	seterr(t_a *a)
 {
-	z->errmsg[ERRNO_FORMAT] = "syntax error near unexpected token.";
-	z->errmsg[ERRNO_RESTRICT] = "Restricted function.";
-	z->errmsg[ERRNO_LONGCMD] = "Command too long.";
-	z->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
-	z->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
-	z->errmsg[ERRNO_FILEFAIL] = "File open failed.";
-	z->errmsg[ERRNO_NOCMD] = "command not found.";
-	z->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
+	a->errmsg[ERRNO_FORMAT] = "syntax error near unexpected token.";
+	a->errmsg[ERRNO_RESTRICT] = "Restricted function.";
+	a->errmsg[ERRNO_LONGCMD] = "Command too long.";
+	a->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
+	a->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
+	a->errmsg[ERRNO_FILEFAIL] = "File open failed.";
+	a->errmsg[ERRNO_NOCMD] = "command not found.";
+	a->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
 }

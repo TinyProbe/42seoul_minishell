@@ -6,13 +6,13 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 20:06:55 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 11:15:24 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:42:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	process(t_z *z)
+void	process(t_a *a)
 {
 	t_i32	fd[4];
 	pid_t	pid;
@@ -21,7 +21,7 @@ void	process(t_z *z)
 	pipe(fd + 2);
 	pid = fork();
 	if (pid)
-		parent(z, fd, pid);
+		parent(a, fd, pid);
 	else
-		child(z, fd);
+		child(a, fd);
 }

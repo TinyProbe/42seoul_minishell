@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:39:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 17:15:51 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:03:27 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	ft_striteri(t_i8 *s, void (*f)(t_u32, t_i8 *));
 t_i8	*ft_strmapi(t_i8 const *s, t_i8 (*f)(t_u32, t_i8));
 t_i8	*ft_strdup(const t_i8 *s1);
 t_i8	*ft_strndup(const t_i8 *s1, size_t n);
-t_i8	*ft_strslice(const t_i8 *s1, t_i32 begin, t_i32 end);
 t_i8	*ft_strjoin(t_i8 const *s1, t_i8 const *s2);
 t_i8	*ft_strtrim(t_i8 const *s1, t_i8 const *set);
 t_i32	ft_strdel(t_i8 *dst, const t_i8 *set);

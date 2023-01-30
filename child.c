@@ -6,39 +6,39 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:02:43 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 11:06:46 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:48:41 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	setchild(t_z *z, t_i32 *fd);
-static void	applyarg(t_z *z, t_i32 *fd);
+static void	setchild(t_a *a, t_i32 *fd);
+static void	applyarg(t_a *a, t_i32 *fd);
 
-void	child(t_z *z, t_i32 *fd)
+void	child(t_a *a, t_i32 *fd)
 {
-	setchild(z, fd);
-	program(z);
-	output(z, z->fd[STDOUT__], z->fd[STDERR__]);
+	setchild(a, fd);
+	program(a);
+	output(a, a->fd[STDOUT__], a->fd[STDERR__]);
 	exit(0);
 }
 
-static void	setchild(t_z *z, t_i32 *fd)
+static void	setchild(t_a *a, t_i32 *fd)
 {
-	z->fd[STDOUT__] = fd[1];
-	z->fd[STDERR__] = fd[1];
+	a->fd[STDOUT__] = fd[1];
+	a->fd[STDERR__] = fd[1];
 	close(fd[0]);
-	z->buf_len = 0;
-	if (z->len == 0)
-		applyarg(z, fd);
+	a->buf_l = 0;
+	if (a->cmd_l == 0)
+		applyarg(a, fd);
 }
 
-static void	applyarg(t_z *z, t_i32 *fd)
+static void	applyarg(t_a *a, t_i32 *fd)
 {
-	if (z->conj == CONJ_OR)
+	if (a->conj == CONJ_OR)
 	{
-		z->fd[STDIN__] = fd[2];
+		a->fd[STDIN__] = fd[2];
 		close(fd[3]);
 	}
-	redirect(z);
+	redirect(a);
 }

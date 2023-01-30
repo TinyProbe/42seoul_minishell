@@ -6,31 +6,31 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 22:02:01 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 10:40:30 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:53:41 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_z *z);
+static void	init(t_a *a);
 
-void	subsh(t_z *z)
+void	subsh(t_a *a)
 {
-	init(z);
-	check(z);
-	token(z);
-	valid(z);
-	execute(z);
+	init(a);
+	check(a);
+	token(a);
+	valid(a);
+	execute(a);
 }
 
-static void	init(t_z *z)
+static void	init(t_a *a)
 {
-	untoken(z);
-	unrepl(z);
-	z->ac = 0;
-	z->ab = 0;
-	z->ae = 0;
-	z->ri_len = 0;
-	z->ro_len = 0;
-	z->conj = CONJ_NONE;
+	untoken(a);
+	unrepl(a);
+	a->ac = 0;
+	a->ab = 0;
+	a->ae = 0;
+	a->ri_l = 0;
+	a->ro_l = 0;
+	a->conj = CONJ_NONE;
 }

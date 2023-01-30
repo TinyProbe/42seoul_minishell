@@ -6,13 +6,13 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 15:50:03 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:40:01 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	export__(t_z *z)
+void	export__(t_a *a)
 {
-	test(z);
+	test(a);
 }

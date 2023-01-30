@@ -6,29 +6,29 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:34:07 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 11:12:40 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:58:35 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static t_bdll	import(t_z *z, t_i8 *path, t_i8 *file);
+static t_bdll	import(t_a *a, t_i8 *path, t_i8 *file);
 
-void	repl_wild(t_z *z)
+void	rp_wild(t_a *a)
 {
 	t_i8	*path;
 	t_i8	*file;
 	t_bdll	bdll;
 
-	path = getpath(z->cwd, z->tkn[z->ab]._);
-	file = getfile(z->tkn[z->ab]._, z->tkn[z->ab].len);
-	bdll = import(z, path, file);
-	join(z, path, &bdll);
+	path = getpath(a->cwd, a->tkn[a->ab]._);
+	file = getfile(a->tkn[a->ab]._, a->tkn[a->ab].len);
+	bdll = import(a, path, file);
+	join(a, path, &bdll);
 	free(path);
 	free(file);
 }
 
-static t_bdll	import(t_z *z, t_i8 *path, t_i8 *file)
+static t_bdll	import(t_a *a, t_i8 *path, t_i8 *file)
 {
 	t_bdll		bdll;
 	DIR			*dir;
@@ -38,9 +38,9 @@ static t_bdll	import(t_z *z, t_i8 *path, t_i8 *file)
 	dir = opendir(path);
 	if (!dir)
 	{
-		z->errno = ERRNO_FILEPATH;
-		z->errarg = path;
-		error(z);
+		a->errno = ERRNO_FILEPATH;
+		a->errarg = path;
+		error(a);
 	}
 	dt = readdir(dir);
 	while (dt)

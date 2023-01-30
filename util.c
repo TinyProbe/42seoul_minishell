@@ -6,55 +6,55 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:16:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 14:37:58 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:55:51 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	recwd(t_z *z)
+void	recwd(t_a *a)
 {
-	if (!getcwd(z->cwd, CWD_MAX))
-		z->errno = ERRNO_LONGCWD;
+	if (!getcwd(a->cwd, CWD_MAX))
+		a->errno = ERRNO_LONGCWD;
 	else
-		z->cwd_len = ft_strlen(z->cwd);
-	error(z);
+		a->cwd_l = ft_strlen(a->cwd);
+	error(a);
 }
 
-void	output(t_z *z, t_i32 out, t_i32 err)
+void	output(t_a *a, t_i32 out, t_i32 err)
 {
 	t_i32	i;
 	t_i32	j;
 
 	i = -1;
 	j = 0;
-	while (++i < z->buf_len)
+	while (++i < a->buf_l)
 	{
-		if (z->buf[i] == STDOUT__)
+		if (a->buf[i] == STDOUT__)
 		{
-			write(out, z->buf + j, i - j + (out != STDOUT__));
+			write(out, a->buf + j, i - j + (out != STDOUT__));
 			j = i + 1;
 		}
-		else if (z->buf[i] == STDERR__)
+		else if (a->buf[i] == STDERR__)
 		{
-			write(err, z->buf + j, i - j + (err != STDERR__));
+			write(err, a->buf + j, i - j + (err != STDERR__));
 			j = i + 1;
 		}
 	}
-	z->buf_len = 0;
+	a->buf_l = 0;
 }
 
-void	untoken(t_z *z)
+void	untoken(t_a *a)
 {
-	while (z->tkn_len--)
-		free(z->tkn[z->tkn_len]._);
-	z->tkn_len++;
+	while (a->tkn_l--)
+		free(a->tkn[a->tkn_l]._);
+	a->tkn_l++;
 }
 
-void	unrepl(t_z *z)
+void	unrepl(t_a *a)
 {
-	while (z->repl_len--)
-		if (z->repl[z->repl_len].type != TYPE_ENV)
-			free(z->repl[z->repl_len]._);
-	z->repl_len++;
+	while (a->rp_l--)
+		if (a->rp[a->rp_l].type != TYPE_ENV)
+			free(a->rp[a->rp_l]._);
+	a->rp_l++;
 }

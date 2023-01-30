@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:54:24 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 12:20:25 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:04:15 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_bool	isincl(t_i8 *cur, t_i8 *file)
 	t_bool	rtn;
 	t_i32	i;
 
-	frags = split__(file, '*');
+	frags = ft_split(file, '*');
 	rtn = (deadln(cur, file, frags) && dfs(cur, frags, 0));
 	i = -1;
 	while (frags[++i])
@@ -59,37 +59,37 @@ static t_bool	dfs(t_i8 *cur, t_i8 **frags, t_i32 i)
 	return (TRUE);
 }
 
-void	test(t_z *z)
+void	test(t_a *a)
 {
 	t_i8	out;
 	t_i32	i;
 	t_i8	buf[1024];
 	t_i32	len;
 
-	if (z->fd[STDIN__] != STDIN__)
+	if (a->fd[STDIN__] != STDIN__)
 	{
-		len = read(z->fd[STDIN__], buf, 1024);
-		write(z->fd[STDOUT__], buf, len);
+		len = read(a->fd[STDIN__], buf, 1024);
+		write(a->fd[STDOUT__], buf, len);
 	}
 	out = STDOUT__;
 	i = -1;
-	while (++i < z->ac)
+	while (++i < a->ac)
 	{
-		write(z->fd[STDOUT__], z->av[i], ft_strlen(z->av[i]));
-		write(z->fd[STDOUT__], " ", 1);
+		write(a->fd[STDOUT__], a->av[i], ft_strlen(a->av[i]));
+		write(a->fd[STDOUT__], " ", 1);
 	}
 	i = -1;
-	while (++i < z->ri_len)
+	while (++i < a->ri_l)
 	{
-		write(z->fd[STDOUT__], z->ri[i], ft_strlen(z->ri[i]));
-		write(z->fd[STDOUT__], " ", 1);
+		write(a->fd[STDOUT__], a->ri[i], ft_strlen(a->ri[i]));
+		write(a->fd[STDOUT__], " ", 1);
 	}
 	i = -1;
-	while (++i < z->ro_len)
+	while (++i < a->ro_l)
 	{
-		write(z->fd[STDOUT__], z->ro[i], ft_strlen(z->ro[i]));
-		write(z->fd[STDOUT__], " ", 1);
+		write(a->fd[STDOUT__], a->ro[i], ft_strlen(a->ro[i]));
+		write(a->fd[STDOUT__], " ", 1);
 	}
-	write(z->fd[STDOUT__], "\n", 1);
-	write(z->fd[STDOUT__], &out, 1);
+	write(a->fd[STDOUT__], "\n", 1);
+	write(a->fd[STDOUT__], &out, 1);
 }

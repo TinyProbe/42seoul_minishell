@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 12:14:17 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:08:05 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_tkn
 	t_i8	*_;
 	t_i32	len;
 }	t_tkn;
-typedef struct s_repl
+typedef struct s_rp
 {
 	t_i8	*_;
 	t_i32	len;
@@ -94,25 +94,25 @@ typedef struct s_repl
 	t_i32	r;
 	t_i32	last;
 	t_type	type;
-}	t_repl;
-typedef struct s_z
+}	t_rp;
+typedef struct s_a
 {
 	t_sigstat	sigstat;
 	const t_i8	*errmsg[ERRNO_MAX];
 	t_i8		*errarg;
 	t_errno		errno;
 	t_i8		cmd[CMD_MAX];
-	t_i32		len;
+	t_i32		cmd_l;
 	t_i8		stk[STK_MAX];
-	t_i32		stk_len;
+	t_i32		stk_l;
 	t_tkn		tkn[TKN_MAX];
-	t_i32		tkn_len;
+	t_i32		tkn_l;
 	t_i8		proc[PROC_MAX];
-	t_i32		proc_len;
+	t_i32		proc_l;
 	t_i8		cwd[CWD_MAX];
-	t_i32		cwd_len;
+	t_i32		cwd_l;
 	t_i8		buf[BUF_MAX];
-	t_i32		buf_len;
+	t_i32		buf_l;
 	t_i32		fd[3];
 	t_i32		rtn;
 	t_i32		ab;
@@ -120,68 +120,67 @@ typedef struct s_z
 	t_i8		*av[ARG_MAX];
 	t_i32		ac;
 	t_i8		*ri[REDIR_MAX];
-	t_i32		ri_len;
+	t_i32		ri_l;
 	t_i8		*ro[REDIR_MAX];
-	t_i32		ro_len;
+	t_i32		ro_l;
 	t_conj		conj;
-	t_repl		repl[REPL_MAX];
-	t_i32		repl_len;
-}	t_z;
+	t_rp		rp[REPL_MAX];
+	t_i32		rp_l;
+}	t_a;
 
-void	sigtoggle(t_z *z);
+void	sigtoggle(t_a *a);
 void	sigint_rl(t_i32 sig);
 void	sigint(t_i32 sig);
 void	sigterm(t_i32 sig);
 void	sigquit(t_i32 sig);
 
-void	process(t_z *z);
-void	parent(t_z *z, t_i32 *fd, pid_t pid);
-void	child(t_z *z, t_i32 *fd);
+void	process(t_a *a);
+void	parent(t_a *a, t_i32 *fd, pid_t pid);
+void	child(t_a *a, t_i32 *fd);
 
-void	redirect(t_z *z);
+void	redirect(t_a *a);
 
-void	minish(t_z *z);
+void	minish(t_a *a);
 
-void	program(t_z *z);
-void	subsh(t_z *z);
-void	echo(t_z *z);
-void	cd(t_z *z);
-void	pwd(t_z *z);
-void	export__(t_z *z);
-void	unset(t_z *z);
-void	env(t_z *z);
-void	exit__(t_z *z);
-void	file_exe(t_z *z);
+void	program(t_a *a);
+void	subsh(t_a *a);
+void	echo(t_a *a);
+void	cd(t_a *a);
+void	pwd(t_a *a);
+void	export__(t_a *a);
+void	unset(t_a *a);
+void	env(t_a *a);
+void	exit__(t_a *a);
+void	file_exe(t_a *a);
 
-void	check(t_z *z);
-void	bracket(t_z *z, t_i8 *s, t_i32 i);
-void	quote(t_z *z);
-void	claw(t_z *z);
+void	check(t_a *a);
+void	bracket(t_a *a, t_i8 *s, t_i32 i);
+void	quote(t_a *a);
+void	claw(t_a *a);
 
-void	token(t_z *z);
-void	untoken(t_z *z);
+void	token(t_a *a);
+void	untoken(t_a *a);
 
-void	valid(t_z *z);
+void	valid(t_a *a);
 
-void	error(t_z *z);
+void	error(t_a *a);
 
-void	execute(t_z *z);
+void	execute(t_a *a);
 
-void	subst(t_z *z);
-void	repl_env(t_z *z);
-void	repl_cmd(t_z *z);
-void	apply_repl(t_z *z);
-void	repl_wild(t_z *z);
-void	join(t_z *z, t_i8 *path, t_bdll *bdll);
+void	subst(t_a *a);
+void	rp_env(t_a *a);
+void	rp_cmd(t_a *a);
+void	apply_rp(t_a *a);
+void	rp_wild(t_a *a);
+void	join(t_a *a, t_i8 *path, t_bdll *bdll);
 
-void	recwd(t_z *z);
-void	output(t_z *z, t_i32 out, t_i32 err);
-void	unrepl(t_z *z);
+void	recwd(t_a *a);
+void	output(t_a *a, t_i32 out, t_i32 err);
+void	unrepl(t_a *a);
 t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);
 t_bool	isincl(t_i8 *cur, t_i8 *file);
-t_i8	**split__(t_i8 *s, t_i8 c);
 
-void	test(t_z *z);
+void	test(t_a *a);
 
 #endif

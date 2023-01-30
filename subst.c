@@ -6,107 +6,107 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:29:50 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 17:44:23 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 13:58:56 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	variable(t_z *z);
-static void	check_stack(t_z *z);
-static void	setrange(t_z *z);
-static void	wildcard(t_z *z);
+static void	variable(t_a *a);
+static void	check_stack(t_a *a);
+static void	setrange(t_a *a);
+static void	wildcard(t_a *a);
 
-void	subst(t_z *z)
+void	subst(t_a *a)
 {
-	z->repl[z->repl_len].l = -1;
-	z->repl[z->repl_len].r = -1;
-	z->repl[z->repl_len].last = -1;
-	z->repl[z->repl_len].type = TYPE_NONE;
-	z->repl[z->repl_len]._ = NULL;
-	z->repl[z->repl_len].len = 0;
-	variable(z);
-	wildcard(z);
+	a->rp[a->rp_l].l = -1;
+	a->rp[a->rp_l].r = -1;
+	a->rp[a->rp_l].last = -1;
+	a->rp[a->rp_l].type = TYPE_NONE;
+	a->rp[a->rp_l]._ = NULL;
+	a->rp[a->rp_l].len = 0;
+	variable(a);
+	wildcard(a);
 }
 
-static void	variable(t_z *z)
+static void	variable(t_a *a)
 {
-	while (++(z->repl[z->repl_len].r) < z->len)
+	while (++(a->rp[a->rp_l].r) < a->cmd_l)
 	{
-		if (z->tkn[z->ab]._[z->repl[z->repl_len].r] == '('
-				|| z->tkn[z->ab]._[z->repl[z->repl_len].r] == ')')
-			bracket(z, z->tkn[z->ab]._, z->repl[z->repl_len].r);
-		else if (z->tkn[z->ab]._[z->repl[z->repl_len].r] == '\'')
-			quote(z);
-		else if (z->tkn[z->ab]._[z->repl[z->repl_len].r] == '"')
-			claw(z);
-		check_stack(z);
+		if (a->tkn[a->ab]._[a->rp[a->rp_l].r] == '('
+				|| a->tkn[a->ab]._[a->rp[a->rp_l].r] == ')')
+			bracket(a, a->tkn[a->ab]._, a->rp[a->rp_l].r);
+		else if (a->tkn[a->ab]._[a->rp[a->rp_l].r] == '\'')
+			quote(a);
+		else if (a->tkn[a->ab]._[a->rp[a->rp_l].r] == '"')
+			claw(a);
+		check_stack(a);
 	}
-	apply_repl(z);
+	apply_rp(a);
 }
 
-static void	check_stack(t_z *z)
+static void	check_stack(t_a *a)
 {
-	if (z->stk_len > 1 || (z->stk_len && z->stk[z->stk_len - 1] != '"'))
+	if (a->stk_l > 1 || (a->stk_l && a->stk[a->stk_l - 1] != '"'))
 		return ;
-	if (z->repl[z->repl_len].r < z->tkn[z->ab].len - 1
-			&& z->tkn[z->ab]._[z->repl[z->repl_len].r] == '$')
+	if (a->rp[a->rp_l].r < a->tkn[a->ab].len - 1
+			&& a->tkn[a->ab]._[a->rp[a->rp_l].r] == '$')
 	{
-		if (z->tkn[z->ab]._[z->repl[z->repl_len].r + 1] == '(')
+		if (a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] == '(')
 		{
-			z->repl[z->repl_len].l = z->repl[z->repl_len].r;
-			z->repl[z->repl_len].last = z->stk_len;
+			a->rp[a->rp_l].l = a->rp[a->rp_l].r;
+			a->rp[a->rp_l].last = a->stk_l;
 		}
 		else
 		{
-			setrange(z);
-			repl_env(z);
+			setrange(a);
+			rp_env(a);
 		}
 	}
-	else if (z->stk_len == z->repl[z->repl_len].last
-			&& z->tkn[z->ab]._[z->repl[z->repl_len].r] == ')')
+	else if (a->stk_l == a->rp[a->rp_l].last
+			&& a->tkn[a->ab]._[a->rp[a->rp_l].r] == ')')
 	{
-		z->repl[z->repl_len].r++;
-		repl_cmd(z);
+		a->rp[a->rp_l].r++;
+		rp_cmd(a);
 	}
 }
 
-static void	setrange(t_z *z)
+static void	setrange(t_a *a)
 {
-	z->repl[z->repl_len].l = z->repl[z->repl_len].r;
-	if (ft_isdigit(z->tkn[z->ab]._[z->repl[z->repl_len].r + 1])
-			|| z->tkn[z->ab]._[z->repl[z->repl_len].r + 1] == '?')
+	a->rp[a->rp_l].l = a->rp[a->rp_l].r;
+	if (ft_isdigit(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
+			|| a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] == '?')
 	{
-		z->repl[z->repl_len].r += 2;
+		a->rp[a->rp_l].r += 2;
 		return ;
 	}
-	while (++(z->repl[z->repl_len].r) < z->tkn[z->ab].len)
-		if (z->tkn[z->ab]._[z->repl[z->repl_len].r] != '_'
-				&& !ft_isalnum(z->tkn[z->ab]._[z->repl[z->repl_len].r]))
+	while (++(a->rp[a->rp_l].r) < a->tkn[a->ab].len)
+		if (a->tkn[a->ab]._[a->rp[a->rp_l].r] != '_'
+				&& !ft_isalnum(a->tkn[a->ab]._[a->rp[a->rp_l].r]))
 			break ;
 }
 
-static void	wildcard(t_z *z)
+static void	wildcard(t_a *a)
 {
 	t_i32	i;
 	t_i32	amt;
 
 	i = -1;
 	amt = 0;
-	// if (z->buf[0] == '(')
+	// if (a->buf[0] == '(')
 	// 	return ;
-	while (++i < z->tkn[z->ab].len)
+	while (++i < a->tkn[a->ab].len)
 	{
-		if (z->tkn[z->ab]._[i] == '(' || z->tkn[z->ab]._[i] == ')')
-			bracket(z, z->tkn[z->ab]._, i);
-		else if (z->tkn[z->ab]._[i] == '\'')
-			quote(z);
-		else if (z->tkn[z->ab]._[i] == '"')
-			claw(z);
-		if (z->tkn[z->ab]._[i] == '*' && ++amt && z->stk_len)
+		if (a->tkn[a->ab]._[i] == '(' || a->tkn[a->ab]._[i] == ')')
+			bracket(a, a->tkn[a->ab]._, i);
+		else if (a->tkn[a->ab]._[i] == '\'')
+			quote(a);
+		else if (a->tkn[a->ab]._[i] == '"')
+			claw(a);
+		if (a->tkn[a->ab]._[i] == '*' && ++amt && a->stk_l)
 			break ;
 	}
-	z->tkn[z->ab].len = ft_strdel(z->tkn[z->ab]._, "'\"");
-	if (i == z->tkn[z->ab].len && amt)
-		repl_wild(z);
+	a->tkn[a->ab].len = ft_strdel(a->tkn[a->ab]._, "'\"");
+	if (i == a->tkn[a->ab].len && amt)
+		rp_wild(a);
 }
