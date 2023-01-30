@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 14:43:57 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 11:06:39 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	init(t_z *z)
 	z->stk_len = 0;
 	z->tkn_len = 0;
 	z->proc_len = ft_strcpy(z->proc, "minish: ");
+	recwd(z);
 	z->buf_len = 0;
 	z->fd[STDIN__] = STDIN__;
 	z->fd[STDOUT__] = STDOUT__;

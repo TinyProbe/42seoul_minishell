@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:54:24 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 16:24:33 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:20:25 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_bool	isincl(t_i8 *cur, t_i8 *file)
 	t_bool	rtn;
 	t_i32	i;
 
-	frags = ft_split(file, '*');
+	frags = split__(file, '*');
 	rtn = (deadln(cur, file, frags) && dfs(cur, frags, 0));
 	i = -1;
 	while (frags[++i])
@@ -50,7 +50,7 @@ static t_bool	dfs(t_i8 *cur, t_i8 **frags, t_i32 i)
 {
 	while (frags[i])
 	{
-		cur = ft_strnstr(cur, frags[i], ft_strlen(frags[i]));
+		cur = ft_strnstr(cur, frags[i], ft_strlen(cur));
 		if (cur++ && dfs(cur, frags, i + 1))
 			return (TRUE);
 		else
@@ -63,7 +63,14 @@ void	test(t_z *z)
 {
 	t_i8	out;
 	t_i32	i;
+	t_i8	buf[1024];
+	t_i32	len;
 
+	if (z->fd[STDIN__] != STDIN__)
+	{
+		len = read(z->fd[STDIN__], buf, 1024);
+		write(z->fd[STDOUT__], buf, len);
+	}
 	out = STDOUT__;
 	i = -1;
 	while (++i < z->ac)

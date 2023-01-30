@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 17:56:14 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 12:14:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	unrepl(t_z *z);
 t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);
 t_bool	isincl(t_i8 *cur, t_i8 *file);
+t_i8	**split__(t_i8 *s, t_i8 c);
 
 void	test(t_z *z);
 
