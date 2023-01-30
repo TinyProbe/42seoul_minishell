@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/30 12:17:36 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/30 14:09:13 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,11 @@ SRC = main.c\
 	  error.c\
 	  execute.c\
 	  subst.c\
-	  repl_cmd.c\
-	  repl_env.c\
-	  repl_wild.c\
+	  rp_cmd.c\
+	  rp_env.c\
+	  rp_wild.c\
 	  join.c\
-	  apply.c\
+	  apply_rp.c\
 	  process.c\
 	  parent.c\
 	  child.c\
@@ -48,7 +48,6 @@ SRC = main.c\
 	  util.c\
 	  util2.c\
 	  util3.c\
-	  util4.c\
 	  handler.c
 
 ifdef B
