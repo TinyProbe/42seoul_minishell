@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:49:38 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:51:29 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	init(t_a *a)
 	a->sigstat = SIGS_PROCCMD;
 	sigtoggle(a);
 	seterr(a);
-	a->errarg = NULL;
-	a->errno = ERRNO_NONE;
+	a->erra = NULL;
+	a->errn = ERR_NONE;
 	a->cmd_l = 0;
 	a->stk_l = 0;
 	a->tkn_l = 0;
@@ -50,12 +50,12 @@ static void	init(t_a *a)
 
 static void	seterr(t_a *a)
 {
-	a->errmsg[ERRNO_FORMAT] = "syntax error near unexpected token.";
-	a->errmsg[ERRNO_RESTRICT] = "Restricted function.";
-	a->errmsg[ERRNO_LONGCMD] = "Command too long.";
-	a->errmsg[ERRNO_LONGCWD] = "Current work directory too long.";
-	a->errmsg[ERRNO_FILEPATH] = "No such file or directory.";
-	a->errmsg[ERRNO_FILEFAIL] = "File open failed.";
-	a->errmsg[ERRNO_NOCMD] = "command not found.";
-	a->errmsg[ERRNO_UNKNOWN] = "Unknown error.";
+	a->errm[ERR_FORMAT] = "syntax error near unexpected token.";
+	a->errm[ERR_RESTRICT] = "Restricted function.";
+	a->errm[ERR_LONGCMD] = "Command too long.";
+	a->errm[ERR_LONGCWD] = "Current work directory too long.";
+	a->errm[ERR_FILEPATH] = "No such file or directory.";
+	a->errm[ERR_FILEFAIL] = "File open failed.";
+	a->errm[ERR_NOCMD] = "command not found.";
+	a->errm[ERR_UNKNOWN] = "Unknown error.";
 }

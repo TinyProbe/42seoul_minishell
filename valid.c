@@ -6,64 +6,62 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:10:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:56:26 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:38:35 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	conjunct_deadline(t_a *a);
-static void	conjunct_format(t_a *a, t_i32 i);
-static void	conjunct_match(t_a *a, t_i32 i);
-static void	redirect_match(t_a *a, t_i32 i);
+static t_i32	conj_deadline(t_a *a);
+static t_i32	conj_format(t_a *a, t_i32 i);
+static t_i32	conj_match(t_a *a, t_i32 i);
+static t_i32	redi_match(t_a *a, t_i32 i);
 
-void	valid(t_a *a)
+t_i32	valid(t_a *a)
 {
 	t_i32	i;
 
 	i = -1;
 	if (a->tkn_l)
-		conjunct_deadline(a);
+		conj_deadline(a);
 	while (++i < a->tkn_l)
-	{
-		conjunct_format(a, i);
-		conjunct_match(a, i);
-		redirect_match(a, i);
-	}
+		if (conj_format(a, i) || conj_match(a, i) || redi_match(a, i))
+			break ;
+	return (a->errn);
 }
 
-static void	conjunct_deadline(t_a *a)
+static t_i32	conj_deadline(t_a *a)
 {
 	if (a->tkn[0]._[0] == '|'
 			|| a->tkn[0]._[0] == '&'
 			|| a->tkn[0]._[0] == ';')
-		a->errarg = a->tkn[0]._;
+		a->erra = a->tkn[0]._;
 	else if (a->tkn[a->tkn_l - 1]._[0] == '|'
 			|| a->tkn[a->tkn_l - 1]._[0] == '&'
 			|| a->tkn[a->tkn_l - 1]._[0] == ';')
-		a->errarg = a->tkn[a->tkn_l - 1]._;
-	if (a->errarg)
-		a->errno = ERRNO_FORMAT;
-	error(a);
+		a->erra = a->tkn[a->tkn_l - 1]._;
+	if (a->erra)
+		a->errn = ERR_FORMAT;
+	return (a->errn);
 }
 
-static void	conjunct_format(t_a *a, t_i32 i)
+static t_i32	conj_format(t_a *a, t_i32 i)
 {
 	if (a->tkn[i]._[0] == '|' && a->tkn[i].len > 2)
-		a->errno = ERRNO_FORMAT;
+		a->errn = ERR_FORMAT;
 	else if (a->tkn[i]._[0] == '&' || a->tkn[i]._[0] == ';')
 	{
 		if (a->tkn[i].len == 1)
-			a->errno = ERRNO_RESTRICT;
+			a->errn = ERR_RESTRICT;
 		else if (a->tkn[i].len > 1 + (a->tkn[i]._[0] == '&'))
-			a->errno = ERRNO_FORMAT;
+			a->errn = ERR_FORMAT;
 	}
-	if (a->errno)
-		a->errarg = a->tkn[i]._;
-	error(a);
+	if (a->errn)
+		a->erra = a->tkn[i]._;
+	return (a->errn);
 }
 
-static void	conjunct_match(t_a *a, t_i32 i)
+static t_i32	conj_match(t_a *a, t_i32 i)
 {
 	if (a->tkn[i]._[0] == '|'
 			|| a->tkn[i]._[0] == '&'
@@ -73,14 +71,14 @@ static void	conjunct_match(t_a *a, t_i32 i)
 					|| a->tkn[i + 1]._[0] == '&'
 					|| a->tkn[i + 1]._[0] == ';'))
 		{
-			a->errno = ERRNO_FORMAT;
-			a->errarg = a->tkn[i + 1]._;
+			a->errn = ERR_FORMAT;
+			a->erra = a->tkn[i + 1]._;
 		}
 	}
-	error(a);
+	return (a->errn);
 }
 
-static void	redirect_match(t_a *a, t_i32 i)
+static t_i32	redi_match(t_a *a, t_i32 i)
 {
 	if (a->tkn[i]._[0] == '<' || a->tkn[i]._[0] == '>')
 	{
@@ -89,9 +87,9 @@ static void	redirect_match(t_a *a, t_i32 i)
 					|| a->tkn[i + 1]._[0] == ';' || a->tkn[i + 1]._[0] == '<'
 					|| a->tkn[i + 1]._[0] == '>' || a->tkn[i + 1]._[0] == '('))
 		{
-			a->errno = ERRNO_FORMAT;
-			a->errarg = a->tkn[i + (i < a->tkn_l - 1)]._;
+			a->errn = ERR_FORMAT;
+			a->erra = a->tkn[i + (i < a->tkn_l - 1)]._;
 		}
 	}
-	error(a);
+	return (a->errn);
 }

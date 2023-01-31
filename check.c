@@ -6,13 +6,13 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:54:12 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:48:34 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:30:54 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-void	check(t_a *a)
+t_i32	check(t_a *a)
 {
 	t_i32	i;
 
@@ -26,13 +26,13 @@ void	check(t_a *a)
 		else if (a->cmd[i] == '"')
 			claw(a);
 		else if (a->cmd[i] == '\\')
-			a->errno = ERRNO_RESTRICT;
-		if (a->errno)
-			error(a);
+			a->errn = ERR_RESTRICT;
+		if (a->errn)
+			return (a->errn);
 	}
 	if (a->stk_l)
-		a->errno = ERRNO_FORMAT;
-	error(a);
+		a->errn = ERR_FORMAT;
+	return (a->errn);
 }
 
 void	bracket(t_a *a, t_i8 *s, t_i32 i)
@@ -50,7 +50,7 @@ void	bracket(t_a *a, t_i8 *s, t_i32 i)
 		if (a->stk_l && a->stk[a->stk_l - 1] == '(')
 			a->stk_l--;
 		else if (!(a->stk_l))
-			a->errno = ERRNO_FORMAT;
+			a->errn = ERR_FORMAT;
 	}
 }
 

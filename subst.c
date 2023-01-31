@@ -6,18 +6,18 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:29:50 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:58:56 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:47:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	variable(t_a *a);
-static void	check_stack(t_a *a);
-static void	setrange(t_a *a);
-static void	wildcard(t_a *a);
+static void		variable(t_a *a);
+static void		check_stack(t_a *a);
+static void		setrange(t_a *a);
+static t_i32	wildcard(t_a *a);
 
-void	subst(t_a *a)
+t_i32	subst(t_a *a)
 {
 	a->rp[a->rp_l].l = -1;
 	a->rp[a->rp_l].r = -1;
@@ -26,12 +26,12 @@ void	subst(t_a *a)
 	a->rp[a->rp_l]._ = NULL;
 	a->rp[a->rp_l].len = 0;
 	variable(a);
-	wildcard(a);
+	return (wildcard(a));
 }
 
 static void	variable(t_a *a)
 {
-	while (++(a->rp[a->rp_l].r) < a->cmd_l)
+	while (++(a->rp[a->rp_l].r) < a->tkn[a->ab].len)
 	{
 		if (a->tkn[a->ab]._[a->rp[a->rp_l].r] == '('
 				|| a->tkn[a->ab]._[a->rp[a->rp_l].r] == ')')
@@ -86,15 +86,13 @@ static void	setrange(t_a *a)
 			break ;
 }
 
-static void	wildcard(t_a *a)
+static t_i32	wildcard(t_a *a)
 {
 	t_i32	i;
 	t_i32	amt;
 
 	i = -1;
 	amt = 0;
-	// if (a->buf[0] == '(')
-	// 	return ;
 	while (++i < a->tkn[a->ab].len)
 	{
 		if (a->tkn[a->ab]._[i] == '(' || a->tkn[a->ab]._[i] == ')')
@@ -108,5 +106,6 @@ static void	wildcard(t_a *a)
 	}
 	a->tkn[a->ab].len = ft_strdel(a->tkn[a->ab]._, "'\"");
 	if (i == a->tkn[a->ab].len && amt)
-		rp_wild(a);
+		return (rp_wild(a));
+	return (a->errn);
 }

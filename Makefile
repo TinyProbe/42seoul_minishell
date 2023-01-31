@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/30 14:09:13 by tkong            ###   ########.fr        #
+#    Updated: 2023/01/31 15:58:24 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,14 @@ SRC = main.c\
 	  token.c\
 	  valid.c\
 	  error.c\
-	  execute.c\
+	  exec.c\
 	  subst.c\
 	  rp_cmd.c\
 	  rp_env.c\
 	  rp_wild.c\
 	  join.c\
 	  apply_rp.c\
+	  self.c\
 	  process.c\
 	  parent.c\
 	  child.c\

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:22:02 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:50:37 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:34:33 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	rein(t_a *a)
 			heredoc(a, i);
 		if (a->fd[STDIN__] == -1)
 		{
-			a->errno = ERRNO_FILEPATH;
-			a->errarg = a->ri[i + 1];
+			a->errn = ERR_FILEPATH;
+			a->erra = a->ri[i + 1];
 			error(a);
 		}
 		i += 2;
@@ -81,8 +81,8 @@ static void	reout(t_a *a)
 					a->ro[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (a->fd[STDIN__] == -1)
 		{
-			a->errno = ERRNO_FILEFAIL;
-			a->errarg = a->ro[i + 1];
+			a->errn = ERR_FILEFAIL;
+			a->erra = a->ro[i + 1];
 			error(a);
 		}
 		i += 2;

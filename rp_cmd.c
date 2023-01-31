@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   repl_cmd.c                                         :+:      :+:    :+:   */
+/*   rp_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:33:56 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:58:35 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 20:51:10 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	rp_cmd(t_a *a)
 {
 	a->cmd_l = a->rp[a->rp_l].r - a->rp[a->rp_l].l - 3;
 	ft_memcpy(a->cmd, a->tkn[a->ab]._ + a->rp[a->rp_l].l + 2, a->cmd_l);
+	a->cmd[a->cmd_l] = '\0';
 	process(a);
 	rp_buf(a);
 	a->rp[a->rp_l]._ = ft_memcpy(
@@ -53,6 +54,8 @@ static void	rp_buf(t_a *a)
 		}
 	}
 	a->buf_l = k;
+	if (a->buf_l && a->buf[a->buf_l - 1] == '\n')
+		a->buf_l--;
 }
 
 static void	init(t_a *a)

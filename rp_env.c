@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   repl_env.c                                         :+:      :+:    :+:   */
+/*   rp_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:01:19 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:53:31 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/30 14:34:08 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	rp_env(t_a *a)
 	t_i32	n;
 	t_i8	*tmp;
 
-	if (a->cmd[a->rp[a->rp_l].l + 1] == '?')
+	if (a->tkn[a->ab]._[a->rp[a->rp_l].l + 1] == '?')
 	{
 		a->rp[a->rp_l]._ = ft_itoa(a->rtn);
 		a->rp[a->rp_l].type = TYPE_ENV_RTN;
@@ -28,7 +28,7 @@ void	rp_env(t_a *a)
 	{
 		n = a->rp[a->rp_l].r - a->rp[a->rp_l].l - 1;
 		tmp = ft_memcpy(malloc(sizeof(t_i8) * n + 1),
-				a->cmd + a->rp[a->rp_l].l + 1, n);
+				a->tkn[a->ab]._ + a->rp[a->rp_l].l + 1, n);
 		tmp[n] = '\0';
 		a->rp[a->rp_l]._ = getenv(tmp);
 		free(tmp);

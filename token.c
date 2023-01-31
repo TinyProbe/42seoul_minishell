@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:03 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:55:19 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:31:29 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ static void		manufact(t_a *a, t_i8 *tkn, t_i32 *i);
 static void		seperate(t_a *a, t_i8 *tkn, t_i32 *i);
 static t_bool	iswith(t_a *a, t_i8 cur, t_i8 nxt);
 
-void	token(t_a *a)
+t_i32	token(t_a *a)
 {
 	t_i8	tkn[CMD_MAX];
 	t_i32	i[2];
 
 	manufact(a, tkn, i);
+	return (a->errn);
 }
 
 static void	manufact(t_a *a, t_i8 *tkn, t_i32 *i)

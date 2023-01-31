@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:16:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:55:51 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:34:48 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	recwd(t_a *a)
 {
 	if (!getcwd(a->cwd, CWD_MAX))
-		a->errno = ERRNO_LONGCWD;
+		a->errn = ERR_LONGCWD;
 	else
 		a->cwd_l = ft_strlen(a->cwd);
 	error(a);
@@ -42,6 +42,11 @@ void	output(t_a *a, t_i32 out, t_i32 err)
 		}
 	}
 	a->buf_l = 0;
+}
+
+void	endout(t_a *a, t_i8 fd)
+{
+	write(a->fd[(t_i32) fd], &fd, 1);
 }
 
 void	untoken(t_a *a)

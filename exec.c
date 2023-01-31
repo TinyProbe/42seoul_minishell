@@ -6,29 +6,31 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:49:17 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:57:53 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	init(t_a *a);
-static void	setrange(t_a *a);
-static void	extract(t_a *a);
+static void		init(t_a *a);
+static void		setrange(t_a *a);
+static t_i32	extract(t_a *a);
 
-void	execute(t_a *a)
+t_i32	exec(t_a *a)
 {
 	while (a->ab < a->tkn_l)
 	{
 		init(a);
 		setrange(a);
-		extract(a);
+		if (extract(a))
+			return (a->errn);
 		if ((a->conj == CONJ_ANDAND && a->rtn)
 				|| (a->conj == CONJ_OROR && !(a->rtn)))
 			continue ;
 		a->cmd_l = 0;
-		process(a);
+		(void) (self(a) && process(a));
 	}
+	return (a->errn);
 }
 
 static void	init(t_a *a)
@@ -50,11 +52,12 @@ static void	setrange(t_a *a)
 	}
 }
 
-static void	extract(t_a *a)
+static t_i32	extract(t_a *a)
 {
 	while (a->ab < a->ae)
 	{
-		subst(a);
+		if (subst(a))
+			return (a->errn);
 		if (a->tkn[a->ab]._[0] == '<' || a->ri_l & 1)
 			a->ri[a->ri_l++] = a->tkn[a->ab]._;
 		else if (a->tkn[a->ab]._[0] == '>' || a->ro_l & 1)
@@ -67,4 +70,5 @@ static void	extract(t_a *a)
 			a->av[a->ac++] = a->tkn[a->ab]._;
 		a->ab++;
 	}
+	return (a->errn);
 }

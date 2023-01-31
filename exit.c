@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:40:01 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 12:52:20 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 void	exit__(t_a *a)
 {
-	test(a);
+	output(a, a->fd[STDOUT__], a->fd[STDERR__]);
+	write(a->fd[STDOUT__], "exit\n", 5);
+	endout(a, STDOUT__);
+	exit(0);
 }

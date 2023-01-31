@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:11:45 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:50:00 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 16:03:44 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ static t_i32	cmdread(t_a *a)
 
 static t_i32	cmdcpy(t_a *a, t_i8 *cmd)
 {
-	add_history(cmd);
 	a->cmd_l = ft_strlen(cmd);
 	if (a->cmd_l >= CMD_MAX)
 	{
-		a->errno = ERRNO_LONGCMD;
+		a->errn = ERR_LONGCMD;
 		error(a);
 		free(cmd);
 		return (-1);
 	}
-	ft_memcpy(a->cmd, cmd, a->cmd_l);
+	if (a->cmd_l)
+		add_history(cmd);
+	ft_memcpy(a->cmd, cmd, a->cmd_l + 1);
 	free(cmd);
 	return (0);
 }

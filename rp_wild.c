@@ -1,47 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   repl_wild.c                                        :+:      :+:    :+:   */
+/*   rp_wild.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:34:07 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:58:35 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 16:02:00 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static t_bdll	import(t_a *a, t_i8 *path, t_i8 *file);
+static t_bdll	import(DIR *dir, t_i8 *file);
 
-void	rp_wild(t_a *a)
+t_i32	rp_wild(t_a *a)
 {
+	DIR		*dir;
 	t_i8	*path;
 	t_i8	*file;
 	t_bdll	bdll;
 
 	path = getpath(a->cwd, a->tkn[a->ab]._);
 	file = getfile(a->tkn[a->ab]._, a->tkn[a->ab].len);
-	bdll = import(a, path, file);
-	join(a, path, &bdll);
-	free(path);
-	free(file);
-}
-
-static t_bdll	import(t_a *a, t_i8 *path, t_i8 *file)
-{
-	t_bdll		bdll;
-	DIR			*dir;
-	t_dirent	*dt;
-
-	ft_bzero(&bdll, sizeof(t_bdll));
 	dir = opendir(path);
 	if (!dir)
 	{
-		a->errno = ERRNO_FILEPATH;
-		a->errarg = path;
-		error(a);
+		free(path);
+		free(file);
+		a->errn = ERR_FILEPATH;
+		a->erra = path;
+		return (a->errn);
 	}
+	bdll = import(dir, file);
+	join(a, path, &bdll);
+	free(path);
+	free(file);
+	while (bdll.len)
+		free(ft_popb(&bdll));
+	return (a->errn);
+}
+
+static t_bdll	import(DIR *dir, t_i8 *file)
+{
+	t_bdll		bdll;
+	t_dirent	*dt;
+
+	ft_bzero(&bdll, sizeof(t_bdll));
 	dt = readdir(dir);
 	while (dt)
 	{

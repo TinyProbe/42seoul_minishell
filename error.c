@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:33 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:48:49 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:33:47 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,26 @@ static void	display(t_a *a);
 
 void	error(t_a *a)
 {
-	if (a->errno == ERRNO_NONE)
+	if (a->errn == ERR_NONE)
 		return ;
 	display(a);
 	if (a->fd[STDERR__] != STDERR__)
-		exit(a->errno);
-	a->rtn = a->errno;
-	a->errno = 0;
-	a->errarg = NULL;
+		exit(a->errn);
+	a->rtn = a->errn;
+	a->errn = 0;
+	a->erra = NULL;
 }
 
 static void	display(t_a *a)
 {
-	t_i8	err;
-
-	err = STDERR__;
 	write(a->fd[STDERR__], a->proc, a->proc_l);
-	if (a->errarg)
+	if (a->erra)
 	{
-		write(a->fd[STDERR__], a->errarg, ft_strlen(a->errarg));
+		write(a->fd[STDERR__], a->erra, ft_strlen(a->erra));
 		write(a->fd[STDERR__], ": ", 2);
 	}
-	write(a->fd[STDERR__], a->errmsg[a->errno],
-			ft_strlen(a->errmsg[a->errno]));
+	write(a->fd[STDERR__], a->errm[a->errn], ft_strlen(a->errm[a->errn]));
 	write(a->fd[STDERR__], "\n", 1);
-	write(a->fd[STDERR__], &err, 1);
+	if (a->fd[STDERR__] != STDERR__)
+		endout(a, STDERR__);
 }

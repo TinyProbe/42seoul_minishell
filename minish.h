@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 14:08:05 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:57:53 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,19 @@ typedef enum e_sigstat
 	SIGS_WAITCMD,
 	SIGS_PROCCMD,
 }	t_sigstat;
-typedef enum e_errno
+typedef enum e_err
 {
-	ERRNO_NONE,
-	ERRNO_FORMAT,
-	ERRNO_RESTRICT,
-	ERRNO_LONGCMD,
-	ERRNO_LONGCWD,
-	ERRNO_FILEPATH,
-	ERRNO_FILEFAIL,
-	ERRNO_NOCMD,
-	ERRNO_UNKNOWN,
-	ERRNO_MAX,
-	EXIT,
-}	t_errno;
+	ERR_NONE,
+	ERR_FORMAT,
+	ERR_RESTRICT,
+	ERR_LONGCMD,
+	ERR_LONGCWD,
+	ERR_FILEPATH,
+	ERR_FILEFAIL,
+	ERR_NOCMD,
+	ERR_UNKNOWN,
+	ERR_MAX,
+}	t_err;
 typedef enum e_conj
 {
 	CONJ_NONE,
@@ -98,9 +97,9 @@ typedef struct s_rp
 typedef struct s_a
 {
 	t_sigstat	sigstat;
-	const t_i8	*errmsg[ERRNO_MAX];
-	t_i8		*errarg;
-	t_errno		errno;
+	const t_i8	*errm[ERR_MAX];
+	t_i8		*erra;
+	t_err		errn;
 	t_i8		cmd[CMD_MAX];
 	t_i32		cmd_l;
 	t_i8		stk[STK_MAX];
@@ -128,13 +127,16 @@ typedef struct s_a
 	t_i32		rp_l;
 }	t_a;
 
+extern char **environ;
+
 void	sigtoggle(t_a *a);
 void	sigint_rl(t_i32 sig);
 void	sigint(t_i32 sig);
 void	sigterm(t_i32 sig);
 void	sigquit(t_i32 sig);
 
-void	process(t_a *a);
+t_i32	self(t_a *a);
+t_i32	process(t_a *a);
 void	parent(t_a *a, t_i32 *fd, pid_t pid);
 void	child(t_a *a, t_i32 *fd);
 
@@ -153,29 +155,29 @@ void	env(t_a *a);
 void	exit__(t_a *a);
 void	file_exe(t_a *a);
 
-void	check(t_a *a);
+t_i32	check(t_a *a);
 void	bracket(t_a *a, t_i8 *s, t_i32 i);
 void	quote(t_a *a);
 void	claw(t_a *a);
 
-void	token(t_a *a);
-void	untoken(t_a *a);
+t_i32	token(t_a *a);
 
-void	valid(t_a *a);
+t_i32	valid(t_a *a);
 
-void	error(t_a *a);
-
-void	execute(t_a *a);
-
-void	subst(t_a *a);
+t_i32	exec(t_a *a);
+t_i32	subst(t_a *a);
 void	rp_env(t_a *a);
 void	rp_cmd(t_a *a);
 void	apply_rp(t_a *a);
-void	rp_wild(t_a *a);
+t_i32	rp_wild(t_a *a);
 void	join(t_a *a, t_i8 *path, t_bdll *bdll);
+
+void	error(t_a *a);
 
 void	recwd(t_a *a);
 void	output(t_a *a, t_i32 out, t_i32 err);
+void	endout(t_a *a, t_i8 fd);
+void	untoken(t_a *a);
 void	unrepl(t_a *a);
 t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);

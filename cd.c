@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:37:04 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:33:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,11 @@
 
 void	cd(t_a *a)
 {
-	test(a);
+	if (chdir(a->av[1]))
+	{
+		a->errn = ERR_FILEPATH;
+		a->erra = a->av[1];
+		error(a);
+	}
+	recwd(a);
 }

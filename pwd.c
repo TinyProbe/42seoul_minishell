@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 13:43:03 by tkong            ###   ########.fr       */
+/*   Updated: 2023/01/31 12:01:43 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	pwd(t_a *a)
 {
-	test(a);
+	write(a->fd[STDOUT__], a->cwd, a->cwd_l);
+	write(a->fd[STDOUT__], "\n", 1);
+	endout(a, STDOUT__);
 }
