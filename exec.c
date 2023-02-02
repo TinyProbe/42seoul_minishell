@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:57:53 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 17:39:38 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ t_i32	exec(t_a *a)
 		init(a);
 		setrange(a);
 		if (extract(a))
-			return (a->errn);
+			break ;
 		if ((a->conj == CONJ_ANDAND && a->rtn)
 				|| (a->conj == CONJ_OROR && !(a->rtn)))
 			continue ;
 		a->cmd_l = 0;
+		re_(a);
 		(void) (self(a) && process(a));
 	}
 	return (a->errn);

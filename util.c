@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:16:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:34:48 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 12:56:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	output(t_a *a, t_i32 out, t_i32 err)
 
 	i = -1;
 	j = 0;
+	a->lln_l = 0;
 	while (++i < a->buf_l)
 	{
 		if (a->buf[i] == STDOUT__)
 		{
+			if (out == STDOUT__)
+				addln(a, i, j);
 			write(out, a->buf + j, i - j + (out != STDOUT__));
 			j = i + 1;
 		}
@@ -42,6 +45,8 @@ void	output(t_a *a, t_i32 out, t_i32 err)
 		}
 	}
 	a->buf_l = 0;
+	if (out == STDOUT__)
+		lastln(a);
 }
 
 void	endout(t_a *a, t_i8 fd)

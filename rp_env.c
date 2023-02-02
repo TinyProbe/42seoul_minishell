@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:01:19 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 14:34:08 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 17:24:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rp_env(t_a *a)
 		tmp = ft_memcpy(malloc(sizeof(t_i8) * n + 1),
 				a->tkn[a->ab]._ + a->rp[a->rp_l].l + 1, n);
 		tmp[n] = '\0';
-		a->rp[a->rp_l]._ = getenv(tmp);
+		a->rp[a->rp_l]._ = getenv__(a, tmp);
 		free(tmp);
 		if (a->rp[a->rp_l]._ == NULL)
 			a->rp[a->rp_l]._ = "\0";

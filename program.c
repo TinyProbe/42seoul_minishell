@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:51:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:34:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 17:31:10 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	program(t_a *a)
 		echo(a);
 	else if (a->ac && !ft_strcmp(a->av[0], "pwd"))
 		pwd(a);
-	else if (a->ac && !ft_strcmp(a->av[0], "env"))
-		env(a);
 	else if (a->ac && a->av[0][0] == '(')
 		subsh2(a);
 	else

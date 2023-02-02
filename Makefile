@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/01/31 15:58:24 by tkong            ###   ########.fr        #
+#    Updated: 2023/02/02 17:53:29 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ SRC = main.c\
 	  util.c\
 	  util2.c\
 	  util3.c\
+	  util4.c\
+	  util5.c\
 	  handler.c
 
 ifdef B

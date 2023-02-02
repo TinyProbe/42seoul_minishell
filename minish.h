@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:57:53 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 17:46:55 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define LN_MAX		10000
 # define CMD_MAX	100000
 # define STK_MAX	10000
 # define TKN_MAX	10000
@@ -94,12 +95,19 @@ typedef struct s_rp
 	t_i32	last;
 	t_type	type;
 }	t_rp;
+typedef struct s_ev
+{
+	t_i8	*k;
+	t_i8	*v;
+}	t_ev;
 typedef struct s_a
 {
 	t_sigstat	sigstat;
 	const t_i8	*errm[ERR_MAX];
 	t_i8		*erra;
 	t_err		errn;
+	t_i8		lln[LN_MAX];
+	t_i32		lln_l;
 	t_i8		cmd[CMD_MAX];
 	t_i32		cmd_l;
 	t_i8		stk[STK_MAX];
@@ -125,9 +133,12 @@ typedef struct s_a
 	t_conj		conj;
 	t_rp		rp[REPL_MAX];
 	t_i32		rp_l;
+	t_bdll		env;
+	t_bdll		exp;
 }	t_a;
 
-extern char **environ;
+extern char	**environ;
+extern t_a	*g_a;
 
 void	sigtoggle(t_a *a);
 void	sigint_rl(t_i32 sig);
@@ -182,6 +193,13 @@ void	unrepl(t_a *a);
 t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);
 t_bool	isincl(t_i8 *cur, t_i8 *file);
+
+void	addln(t_a *a, t_i32 i, t_i32 j);
+void	lastln(t_a *a);
+t_i8	*getkey__(const t_i8 *s);
+t_i8	*getval__(const t_i8 *s);
+t_i8	*getenv__(t_a *a, const t_i8 *s);
+void	re_(t_a *a);
 
 void	test(t_a *a);
 

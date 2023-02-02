@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:39:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 14:03:27 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/02 15:44:18 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,6 @@ void	*ft_front(t_bdll *bdll);
 void	*ft_back(t_bdll *bdll);
 t_node	*ft_search(t_bdll *bdll, t_i32 idx);
 void	*ft_at(t_bdll *bdll, t_i32 idx);
-void	ft_setat(t_bdll *bdll, t_i32 idx, void *e);
+void	*ft_setat(t_bdll *bdll, t_i32 idx, void *e);
 
 #endif
