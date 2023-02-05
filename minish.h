@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:55 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 20:06:15 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define REDIR_MAX	10000
 # define REPL_MAX	10000
 # define PROMPT		"minish> "
+# define DECLARE	"declare -x "
 
 typedef enum e_sigstat
 {
@@ -49,6 +50,7 @@ typedef enum e_err
 	ERR_FILEPATH,
 	ERR_FILEFAIL,
 	ERR_NOCMD,
+	ERR_IDENTI,
 	ERR_UNKNOWN,
 	ERR_MAX,
 }	t_err;
@@ -198,9 +200,13 @@ void	addln(t_a *a, t_i32 i, t_i32 j);
 void	lastln(t_a *a);
 t_i8	*getkey__(const t_i8 *s);
 t_i8	*getval__(const t_i8 *s);
+t_ev	*getelem__(t_bdll *map, const t_i8 *k);
+t_node	*getnode__(t_bdll *map, const t_i8 *k);
 t_i8	*getenv__(t_a *a, const t_i8 *s);
 void	re_(t_a *a);
-
-void	test(t_a *a);
+void	del_env(t_bdll *map, const t_i8 *k);
+t_i32	check_env(t_a *a, t_i32 i, t_i32 j, t_i8 *k);
+t_i32	check_env2(t_a *a, t_i32 i, t_i32 j);
+void	sync_env(t_a *a);
 
 #endif

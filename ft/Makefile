@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 12:24:20 by tkong             #+#    #+#              #
-#    Updated: 2023/01/25 01:29:35 by tkong            ###   ########.fr        #
+#    Updated: 2023/02/06 00:00:16 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRC		= ft_fput.c\
 		  ft_string2.c\
 		  ft_string3.c\
 		  ft_string4.c\
-		  ft_string5.c\
 		  ft_utils1.c\
 		  ft_utils2.c\
 		  ft_utils3.c\

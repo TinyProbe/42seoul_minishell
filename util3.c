@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:54:24 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/30 14:04:15 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 20:06:15 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,4 @@ static t_bool	dfs(t_i8 *cur, t_i8 **frags, t_i32 i)
 			return (FALSE);
 	}
 	return (TRUE);
-}
-
-void	test(t_a *a)
-{
-	t_i8	out;
-	t_i32	i;
-	t_i8	buf[1024];
-	t_i32	len;
-
-	if (a->fd[STDIN__] != STDIN__)
-	{
-		len = read(a->fd[STDIN__], buf, 1024);
-		write(a->fd[STDOUT__], buf, len);
-	}
-	out = STDOUT__;
-	i = -1;
-	while (++i < a->ac)
-	{
-		write(a->fd[STDOUT__], a->av[i], ft_strlen(a->av[i]));
-		write(a->fd[STDOUT__], " ", 1);
-	}
-	i = -1;
-	while (++i < a->ri_l)
-	{
-		write(a->fd[STDOUT__], a->ri[i], ft_strlen(a->ri[i]));
-		write(a->fd[STDOUT__], " ", 1);
-	}
-	i = -1;
-	while (++i < a->ro_l)
-	{
-		write(a->fd[STDOUT__], a->ro[i], ft_strlen(a->ro[i]));
-		write(a->fd[STDOUT__], " ", 1);
-	}
-	write(a->fd[STDOUT__], "\n", 1);
-	write(a->fd[STDOUT__], &out, 1);
 }

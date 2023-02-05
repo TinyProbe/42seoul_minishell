@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:40:06 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:46:30 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 19:00:37 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,72 @@
 
 void	re_(t_a *a)
 {
+	t_ev	*elem;
+
+	elem = getelem__(&(a->env), "_");
+	if (elem)
+	{
+		if (elem->v)
+			free(elem->v);
+	}
+	else
+	{
+		elem = (t_ev *) malloc(sizeof(t_ev));
+		elem->k = ft_strdup("_");
+		ft_pushb(&(a->env), elem);
+	}
+	if (!ft_strcmp(a->av[0], "env"))
+		elem->v = ft_strdup("env");
+	else
+		elem->v = ft_strdup(a->av[a->ac - 1]);
+}
+
+t_node	*getnode__(t_bdll *map, const t_i8 *k)
+{
+	t_node	*p;
+
+	p = map->hd;
+	while (TRUE)
+	{
+		if (!ft_strcmp(((t_ev *) (p->e))->k, k))
+			return (p);
+		p = p->r;
+		if (p == map->hd)
+			break ;
+	}
+	return (NULL);
+}
+
+t_ev	*getelem__(t_bdll *map, const t_i8 *k)
+{
+	t_node	*p;
+
+	p = getnode__(map, k);
+	if (p)
+		return (p->e);
+	return (NULL);
+}
+
+void	del_env(t_bdll *map, const t_i8 *k)
+{
 	t_i32	i;
 	t_node	*p;
-	t_ev	*cur;
+	t_ev	*e;
 
 	i = -1;
-	p = a->env.hd;
-	cur = p->e;
-	while (++i < a->env.len && ft_strcmp(cur->k, "_"))
+	p = map->hd;
+	e = p->e;
+	while (++i < map->len)
 	{
+		if (!ft_strcmp(e->k, k))
+		{
+			e = ft_popat(map, i);
+			free(e->k);
+			free(e->v);
+			free(e);
+			break ;
+		}
 		p = p->r;
-		cur = p->e;
-	}
-	if (i < a->env.len)
-	{
-		free(cur->v);
-		cur->v = ft_strdup(a->av[a->ac - 1]);
+		e = p->e;
 	}
 }

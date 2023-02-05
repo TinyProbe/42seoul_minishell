@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:29:50 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:47:17 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 17:23:55 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		variable(t_a *a);
 static void		check_stack(t_a *a);
-static void		setrange(t_a *a);
+static t_i32	setrange(t_a *a);
 static t_i32	wildcard(t_a *a);
 
 t_i32	subst(t_a *a)
@@ -59,7 +59,8 @@ static void	check_stack(t_a *a)
 		}
 		else
 		{
-			setrange(a);
+			if (setrange(a))
+				return ;
 			rp_env(a);
 		}
 	}
@@ -71,19 +72,24 @@ static void	check_stack(t_a *a)
 	}
 }
 
-static void	setrange(t_a *a)
+static t_i32	setrange(t_a *a)
 {
+	if (!ft_isalpha(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
+			&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '_'
+			&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '-')
+		return (-1);
 	a->rp[a->rp_l].l = a->rp[a->rp_l].r;
 	if (ft_isdigit(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
 			|| a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] == '?')
 	{
 		a->rp[a->rp_l].r += 2;
-		return ;
+		return (0);
 	}
 	while (++(a->rp[a->rp_l].r) < a->tkn[a->ab].len)
 		if (a->tkn[a->ab]._[a->rp[a->rp_l].r] != '_'
 				&& !ft_isalnum(a->tkn[a->ab]._[a->rp[a->rp_l].r]))
 			break ;
+	return (0);
 }
 
 static t_i32	wildcard(t_a *a)

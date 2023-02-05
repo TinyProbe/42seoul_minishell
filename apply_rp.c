@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:57:21 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 22:09:05 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 17:30:29 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	tkncpy(t_a *a, t_i8 *tkn)
 			k = -1;
 			while (++k < a->rp[j].len)
 				tkn[l++] = a->rp[j]._[k];
-			i = a->rp[j++].r;
+			i = a->rp[j++].r - 1;
 		}
 		else
 			tkn[l++] = a->tkn[a->ab]._[i];

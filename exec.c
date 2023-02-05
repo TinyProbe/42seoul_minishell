@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:39:38 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 00:48:23 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ static t_i32	extract(t_a *a)
 			a->av[a->ac++] = a->tkn[a->ab]._;
 		a->ab++;
 	}
+	a->av[a->ac] = NULL;
 	return (a->errn);
 }

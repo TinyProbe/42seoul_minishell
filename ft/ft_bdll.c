@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 01:15:01 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/29 07:09:19 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 16:23:56 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,11 @@ void	*ft_popat(t_bdll *bdll, t_i32 idx)
 	dst = ft_search(bdll, idx);
 	rtn = dst->e;
 	if (bdll->hd == dst)
-	{
-		free(bdll->hd);
+		bdll->hd = dst->r;
+	dst->l->r = dst->r;
+	dst->r->l = dst->l;
+	free(dst);
+	if (!--(bdll->len))
 		bdll->hd = NULL;
-	}
-	else
-	{
-		dst->l->r = dst->r;
-		dst->r->l = dst->l;
-		free(dst);
-	}
-	bdll->len--;
 	return (rtn);
 }

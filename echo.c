@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/01 19:27:11 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 16:53:46 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@ static t_i32	_cpy(t_a *a, t_i8 *s, t_i32 i)
 	len = 0;
 	while (++i < a->ac)
 	{
-		if (a->av[i][0] == '-')
-		{
-			a->errn = ERR_FORMAT;
-			a->erra = a->av[i];
-			error(a);
-		}
 		tmp = ft_strlen(a->av[i]);
 		ft_memcpy(s + len, a->av[i], tmp);
 		len += tmp;

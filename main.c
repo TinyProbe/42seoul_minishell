@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 16:56:51 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 00:58:18 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ static void	seterr(t_a *a)
 	a->errm[ERR_FILEPATH] = "No such file or directory.";
 	a->errm[ERR_FILEFAIL] = "File open failed.";
 	a->errm[ERR_NOCMD] = "Command not found.";
+	a->errm[ERR_IDENTI] = "Not a valid identifier.";
 	a->errm[ERR_UNKNOWN] = "Unknown error.";
 }

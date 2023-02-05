@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 12:28:13 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:53:13 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/04 20:56:04 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,14 @@ t_i8	*getval__(const t_i8 *s)
 
 t_i8	*getenv__(t_a *a, const t_i8 *s)
 {
-	t_i32	i;
-	t_node	*p;
-	t_i32	len;
+	void	*env;
 	t_ev	*cur;
 
-	i = -1;
-	p = a->exp.hd;
-	len = a->exp.len;
+	env = &(a->exp);
 	if (!ft_strcmp(s, "_"))
-	{
-		p = a->env.hd;
-		len = a->env.len;
-	}
-	cur = p->e;
-	while (++i < len && ft_strcmp(cur->k, s))
-	{
-		p = p->r;
-		cur = p->e;
-	}
-	if (i == len)
-		return (NULL);
-	return (cur->v);
+		env = &(a->env);
+	cur = getelem__(env, s);
+	if (cur)
+		return (cur->v);
+	return (NULL);
 }

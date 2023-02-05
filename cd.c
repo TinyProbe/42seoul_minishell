@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:09:34 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/05 18:24:36 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	cd(t_a *a)
 	}
 	recwd(a);
 	repwd(a);
+	sync_env(a);
 	a->proc_l -= ft_strlen("cd: ");
 }
 
@@ -38,43 +39,46 @@ static void	repwd(t_a *a)
 
 static void	repwd_env(t_a *a)
 {
-	t_node	*p;
-	t_ev	*cur;
+	t_ev	*elem;
 
-	p = a->env.hd;
-	while (TRUE)
+	elem = getelem__(&(a->env), "PWD");
+	if (elem)
 	{
-		cur = p->e;
-		if (!ft_strcmp(cur->k, "PWD"))
-			break ;
-		p = p->r;
+		if (elem->v)
+			free(elem->v);
 	}
-	cur->v = ft_strndup(a->cwd, a->cwd_l);
+	else
+	{
+		elem = (t_ev *) malloc(sizeof(t_ev));
+		elem->k = ft_strdup("PWD");
+		ft_pushb(&(a->env), elem);
+	}
+	elem->v = ft_strndup(a->cwd, a->cwd_l);
 }
 
 static void	repwd_exp(t_a *a)
 {
-	t_node	*p;
 	t_ev	*cur;
 	t_ev	*old;
 
-	p = a->exp.hd;
-	while (TRUE)
+	cur = getelem__(&(a->exp), "PWD");
+	old = getelem__(&(a->exp), "OLDPWD");
+	if (!cur)
 	{
-		cur = p->e;
-		if (!ft_strcmp(cur->k, "PWD"))
-			break ;
-		p = p->r;
+		cur = (t_ev *) malloc(sizeof(t_ev));
+		cur->k = ft_strdup("PWD");
+		cur->v = NULL;
+		ft_pushb(&(a->exp), cur);
 	}
-	p = a->exp.hd;
-	while (TRUE)
+	if (!old)
 	{
-		old = p->e;
-		if (!ft_strcmp(old->k, "OLDPWD"))
-			break ;
-		p = p->r;
+		old = (t_ev *) malloc(sizeof(t_ev));
+		old->k = ft_strdup("OLDPWD");
+		old->v = NULL;
+		ft_pushb(&(a->exp), old);
 	}
-	free(old->v);
+	if (old->v)
+		free(old->v);
 	old->v = cur->v;
 	cur->v = ft_strndup(a->cwd, a->cwd_l);
 }
