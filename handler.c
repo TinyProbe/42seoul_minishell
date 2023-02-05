@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:05:59 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 12:59:59 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 01:40:27 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	sigint_rl(t_i32 sig)
 void	sigint(t_i32 sig)
 {
 	(void) sig;
+	write(g_a->fd[STDOUT__], "\n", 1);
 }
 
 void	sigterm(t_i32 sig)
@@ -58,4 +59,5 @@ void	sigterm(t_i32 sig)
 void	sigquit(t_i32 sig)
 {
 	(void) sig;
+	write(g_a->fd[STDOUT__], "Quit: 3\n", 8);
 }
