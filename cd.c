@@ -6,35 +6,35 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 18:24:36 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:36:41 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
 
-static void	repwd(t_a *a);
 static void	repwd_env(t_a *a);
 static void	repwd_exp(t_a *a);
 
 void	cd(t_a *a)
 {
+	t_i8	*path;
+
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "cd: ");
-	if (chdir(a->av[1]))
+	if (a->ac == 1)
+		path = getenv__(a, "HOME");
+	else
+		path = a->av[1];
+	if (chdir(path))
 	{
 		a->errn = ERR_FILEPATH;
-		a->erra = a->av[1];
+		a->erra = path;
 		error(a);
 	}
 	recwd(a);
-	repwd(a);
-	sync_env(a);
-	a->proc_l -= ft_strlen("cd: ");
-}
-
-static void	repwd(t_a *a)
-{
 	repwd_env(a);
 	repwd_exp(a);
+	sync_env(a);
+	a->proc_l -= ft_strlen("cd: ");
 }
 
 static void	repwd_env(t_a *a)

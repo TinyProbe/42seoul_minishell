@@ -6,7 +6,7 @@
 #    By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 06:26:52 by tkong             #+#    #+#              #
-#    Updated: 2023/02/05 20:00:40 by tkong            ###   ########.fr        #
+#    Updated: 2023/02/06 16:04:48 by tkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRC = main.c\
 	  rp_cmd.c\
 	  rp_env.c\
 	  rp_wild.c\
-	  join.c\
 	  apply_rp.c\
 	  self.c\
 	  process.c\

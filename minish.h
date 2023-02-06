@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 20:06:15 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:31:43 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define CWD_MAX	10000
 # define BUF_MAX	100000
 # define ARG_MAX	10000
+# define EXT_MAX	10000
 # define REDIR_MAX	10000
 # define REPL_MAX	10000
 # define PROMPT		"minish> "
@@ -102,6 +103,11 @@ typedef struct s_ev
 	t_i8	*k;
 	t_i8	*v;
 }	t_ev;
+typedef struct s_ext
+{
+	t_i32	l;
+	t_i32	r;
+}	t_ext;
 typedef struct s_a
 {
 	t_sigstat	sigstat;
@@ -128,6 +134,8 @@ typedef struct s_a
 	t_i32		ae;
 	t_i8		*av[ARG_MAX];
 	t_i32		ac;
+	t_ext		ext[EXT_MAX];
+	t_i32		ext_l;
 	t_i8		*ri[REDIR_MAX];
 	t_i32		ri_l;
 	t_i8		*ro[REDIR_MAX];
@@ -183,7 +191,6 @@ void	rp_env(t_a *a);
 void	rp_cmd(t_a *a);
 void	apply_rp(t_a *a);
 t_i32	rp_wild(t_a *a);
-void	join(t_a *a, t_i8 *path, t_bdll *bdll);
 
 void	error(t_a *a);
 
@@ -192,6 +199,7 @@ void	output(t_a *a, t_i32 out, t_i32 err);
 void	endout(t_a *a, t_i8 fd);
 void	untoken(t_a *a);
 void	unrepl(t_a *a);
+void	unext(t_a *a);
 t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);
 t_bool	isincl(t_i8 *cur, t_i8 *file);

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:00:54 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 00:58:18 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:44:26 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	init(t_a *a)
 	a->fd[STDERR__] = STDERR__;
 	a->rtn = 0;
 	a->ac = 0;
+	a->ext_l = 0;
 	a->ri_l = 0;
 	a->ro_l = 0;
 	a->conj = CONJ_NONE;

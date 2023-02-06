@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 00:48:23 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:02:12 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_i32	exec(t_a *a)
 
 static void	init(t_a *a)
 {
+	unext(a);
 	a->ac = 0;
 	a->ri_l = 0;
 	a->ro_l = 0;
@@ -59,7 +60,9 @@ static t_i32	extract(t_a *a)
 	{
 		if (subst(a))
 			return (a->errn);
-		if (a->tkn[a->ab]._[0] == '<' || a->ri_l & 1)
+		if (a->tkn[a->ab]._ == NULL)
+			;
+		else if (a->tkn[a->ab]._[0] == '<' || a->ri_l & 1)
 			a->ri[a->ri_l++] = a->tkn[a->ab]._;
 		else if (a->tkn[a->ab]._[0] == '>' || a->ro_l & 1)
 			a->ro[a->ro_l++] = a->tkn[a->ab]._;

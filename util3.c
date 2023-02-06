@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:54:24 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 20:06:15 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:50:29 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ static t_bool	dfs(t_i8 *cur, t_i8 **frags, t_i32 i)
 			return (FALSE);
 	}
 	return (TRUE);
+}
+
+void	unext(t_a *a)
+{
+	while (a->ext_l--)
+		while (a->ext[a->ext_l].l < a->ext[a->ext_l].r)
+			free(a->av[a->ext[a->ext_l].l++]);
+	a->ext_l++;
 }
