@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 16:53:46 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 20:30:00 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	echo(t_a *a)
 	if (eol)
 		s[len++] = '\n';
 	_out(a, s, len);
+	a->proc_l -= ft_strlen("echo: ");
 }
 
 static t_i32	_cpy(t_a *a, t_i8 *s, t_i32 i)

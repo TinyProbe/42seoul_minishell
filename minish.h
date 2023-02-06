@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 15:31:43 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 19:51:31 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,6 @@ t_i8	*getpath(t_i8 *cwd, t_i8 *arg);
 t_i8	*getfile(t_i8 *arg, t_i32 len);
 t_bool	isincl(t_i8 *cur, t_i8 *file);
 
-void	addln(t_a *a, t_i32 i, t_i32 j);
 void	lastln(t_a *a);
 t_i8	*getkey__(const t_i8 *s);
 t_i8	*getval__(const t_i8 *s);

@@ -6,28 +6,23 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 12:28:13 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/04 20:56:04 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 19:51:01 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minish.h"
-
-void	addln(t_a *a, t_i32 i, t_i32 j)
-{
-	ft_memcpy(a->lln + a->lln_l, a->buf + j, i - j);
-	a->lln_l += (i - j);
-}
 
 void	lastln(t_a *a)
 {
 	t_i32	i;
 	t_i32	j;
 
+	ft_memcpy(a->lln, a->buf, a->buf_l);
+	a->lln_l = a->buf_l;
 	i = a->lln_l;
 	j = 0;
-	while (i--)
-		if (a->lln[i] == '\n')
-			break ;
+	while (i-- && a->lln[i] != '\n')
+		;
 	while (++i < a->lln_l)
 		a->lln[j++] = a->lln[i];
 	a->lln[j] = '\0';

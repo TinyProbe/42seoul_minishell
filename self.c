@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:29:10 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/02 17:28:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 20:13:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_i32	self(t_a *a)
 {
+	redirect(a);
 	if (a->ac && !ft_strcmp(a->av[0], "cd"))
 		cd(a);
 	else if (a->ac && !ft_strcmp(a->av[0], "env"))

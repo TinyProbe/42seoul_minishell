@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 16:02:12 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 20:19:20 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void		init(t_a *a);
 static void		setrange(t_a *a);
 static t_i32	extract(t_a *a);
+static void		recover(t_a *a);
 
 t_i32	exec(t_a *a)
 {
@@ -30,6 +31,7 @@ t_i32	exec(t_a *a)
 		a->cmd_l = 0;
 		re_(a);
 		(void) (self(a) && process(a));
+		recover(a);
 	}
 	return (a->errn);
 }
@@ -76,4 +78,18 @@ static t_i32	extract(t_a *a)
 	}
 	a->av[a->ac] = NULL;
 	return (a->errn);
+}
+
+static void		recover(t_a *a)
+{
+	if (a->fd[STDIN__] != STDIN__)
+	{
+		close(a->fd[STDIN__]);
+		a->fd[STDIN__] = STDIN__;
+	}
+	if (a->fd[STDOUT__] != STDOUT__)
+	{
+		close(a->fd[STDOUT__]);
+		a->fd[STDOUT__] = STDOUT__;
+	}
 }

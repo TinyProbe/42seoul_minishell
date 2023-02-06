@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:03:19 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 19:47:56 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/06 18:05:26 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,19 @@ static void	no_del(t_a *a, t_node *p, t_ev *cur, t_ev *cur2)
 	cur = p->e;
 	while (++i < a->env.len)
 	{
-		if (!ft_strcmp(cur->k, "_"))
-			continue ;
-		cur2 = getelem__(&(a->exp), cur->k);
-		if (cur2 && cur2->v)
+		if (ft_strcmp(cur->k, "_"))
 		{
-			free(cur->v);
-			cur->v = ft_strdup(cur2->v);
-		}
-		else
-		{
-			del_env(&(a->env), cur->k);
-			--i;
+			cur2 = getelem__(&(a->exp), cur->k);
+			if (cur2 && cur2->v)
+			{
+				free(cur->v);
+				cur->v = ft_strdup(cur2->v);
+			}
+			else
+			{
+				del_env(&(a->env), cur->k);
+				--i;
+			}
 		}
 		p = p->r;
 		cur = p->e;
@@ -55,7 +56,7 @@ static void	no_add(t_a *a, t_node *p, t_ev *cur, t_ev *cur2)
 	cur = p->e;
 	while (++i < a->exp.len)
 	{
-		if (cur && cur->v)
+		if (ft_strcmp(cur->k, "OLDPWD") && cur->v)
 		{
 			cur2 = getelem__(&(a->env), cur->k);
 			if (cur2)
