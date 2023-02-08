@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/04 16:48:27 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:18:31 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void	env(t_a *a)
 	if (a->ac == 1)
 		show_env(a);
 	else
+	{
 		if (check_arg(a))
 			error(a);
 		else
 			add_env(a);
+	}
 	a->proc_l -= ft_strlen("env: ");
 }
 

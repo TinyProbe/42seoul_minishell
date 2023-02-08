@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 20:19:20 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:15:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_i32	exec(t_a *a)
 		if (extract(a))
 			break ;
 		if ((a->conj == CONJ_ANDAND && a->rtn)
-				|| (a->conj == CONJ_OROR && !(a->rtn)))
+			|| (a->conj == CONJ_OROR && !(a->rtn)))
 			continue ;
 		a->cmd_l = 0;
 		re_(a);
@@ -50,7 +50,7 @@ static void	setrange(t_a *a)
 	while (a->ae < a->tkn_l)
 	{
 		if (a->ab != a->ae && (a->tkn[a->ae]._[0] == '|'
-					|| a->tkn[a->ae]._[0] == '&'))
+				|| a->tkn[a->ae]._[0] == '&'))
 			break ;
 		a->ae++;
 	}
@@ -80,7 +80,7 @@ static t_i32	extract(t_a *a)
 	return (a->errn);
 }
 
-static void		recover(t_a *a)
+static void	recover(t_a *a)
 {
 	if (a->fd[STDIN__] != STDIN__)
 	{

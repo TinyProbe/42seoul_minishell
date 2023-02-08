@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:40:06 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 19:00:37 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:19:12 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_node	*getnode__(t_bdll *map, const t_i8 *k)
 	p = map->hd;
 	while (TRUE)
 	{
-		if (!ft_strcmp(((t_ev *) (p->e))->k, k))
+		if (!ft_strcmp(((t_ev *)(p->e))->k, k))
 			return (p);
 		p = p->r;
 		if (p == map->hd)
@@ -82,4 +82,18 @@ void	del_env(t_bdll *map, const t_i8 *k)
 		p = p->r;
 		e = p->e;
 	}
+}
+
+t_i32	cmdtype(t_a *a)
+{
+	if (a->cmd_l || (a->ac && (!ft_strcmp(a->av[0], "cd")
+				|| !ft_strcmp(a->av[0], "env")
+				|| !ft_strcmp(a->av[0], "export")
+				|| !ft_strcmp(a->av[0], "unset")
+				|| !ft_strcmp(a->av[0], "exit")
+				|| !ft_strcmp(a->av[0], "echo")
+				|| !ft_strcmp(a->av[0], "pwd")
+				|| a->av[0][0] == '(')))
+		return (1);
+	return (0);
 }

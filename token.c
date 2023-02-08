@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:10:03 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:31:29 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:18:05 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	seperate(t_a *a, t_i8 *tkn, t_i32 *i)
 		else if (a->cmd[i[0]] == '"')
 			claw(a);
 		if (++i[0] >= a->cmd_l || !iswith(a, tkn[i[1]], a->cmd[i[0]]))
-			break;
+			break ;
 	}
 	a->tkn[a->tkn_l]._ = ft_strndup(tkn, ++i[1]);
 	a->tkn[a->tkn_l++].len = i[1];
@@ -63,10 +63,10 @@ static t_bool	iswith(t_a *a, t_i8 cur, t_i8 nxt)
 	if (a->stk_l)
 		return (TRUE);
 	if (((cur == '&' || cur == '|' || cur == '<'
-					|| cur == '>' || cur == ';') && cur != nxt)
-			|| ((nxt == '&' || nxt == '|' || nxt == '<'
-					|| nxt == '>' || nxt == ';') && cur != nxt)
-			|| ft_isspace(nxt))
+				|| cur == '>' || cur == ';') && cur != nxt)
+		|| ((nxt == '&' || nxt == '|' || nxt == '<'
+				|| nxt == '>' || nxt == ';') && cur != nxt)
+		|| ft_isspace(nxt))
 		return (FALSE);
 	return (TRUE);
 }

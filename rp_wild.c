@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:34:07 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 16:03:17 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:15:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_bdll	import(DIR *dir, t_i8 *file)
 		if (isincl(dt->d_name, file))
 		{
 			ft_pushb(&bdll, ft_memcpy(malloc(sizeof(t_i8) * dt->d_namlen + 1),
-						dt->d_name, dt->d_namlen));
+					dt->d_name, dt->d_namlen));
 			((t_i8 *) ft_back(&bdll))[dt->d_namlen] = '\0';
 		}
 		dt = readdir(dir);

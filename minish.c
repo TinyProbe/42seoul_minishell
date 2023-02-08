@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:11:45 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 20:07:45 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:44:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_i32	cmdread(t_a *a)
 		ft_putstr_fd("exit\n", a->fd[STDOUT__]);
 		exit(0);
 	}
-	return cmdcpy(a, cmd);
+	return (cmdcpy(a, cmd));
 }
 
 static t_i32	cmdcpy(t_a *a, t_i8 *cmd)

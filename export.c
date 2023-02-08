@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 19:57:51 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:19:39 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void	export__(t_a *a)
 	if (a->ac == 1)
 		show_exp(a);
 	else
+	{
 		if (check_env(a, 0, 0, NULL))
 			error(a);
 		else
 			add_exp(a);
+	}
 	sync_env(a);
 	a->proc_l -= ft_strlen("export: ");
 }

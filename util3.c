@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:54:24 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 15:50:29 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:14:17 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static t_bool	deadln(t_i8 *cur, t_i8 *file, t_i8 **frags)
 	if (file[0] != '*' && ft_strncmp(cur, frags[0], ft_strlen(frags[0])))
 		return (FALSE);
 	if (file[ft_strlen(file) - 1] != '*'
-			&& ft_strncmp(cur + (ft_strlen(cur) - ft_strlen(frags[last - 1])),
-				frags[last - 1], ft_strlen(frags[last - 1])))
+		&& ft_strncmp(cur + (ft_strlen(cur) - ft_strlen(frags[last - 1])),
+			frags[last - 1], ft_strlen(frags[last - 1])))
 		return (FALSE);
 	return (TRUE);
 }

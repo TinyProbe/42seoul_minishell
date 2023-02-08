@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 19:51:31 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:28:47 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef enum e_type
 	TYPE_CMD,
 }	t_type;
 
-typedef struct dirent t_dirent;
+typedef struct dirent	t_dirent;
 typedef struct s_tkn
 {
 	t_i8	*_;
@@ -147,7 +147,7 @@ typedef struct s_a
 	t_bdll		exp;
 }	t_a;
 
-extern char	**environ;
+extern t_i8	**environ;
 extern t_a	*g_a;
 
 void	sigtoggle(t_a *a);
@@ -215,5 +215,6 @@ void	del_env(t_bdll *map, const t_i8 *k);
 t_i32	check_env(t_a *a, t_i32 i, t_i32 j, t_i8 *k);
 t_i32	check_env2(t_a *a, t_i32 i, t_i32 j);
 void	sync_env(t_a *a);
+t_i32	cmdtype(t_a *a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 07:26:08 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 21:09:53 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 15:19:48 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	file_run(t_a *a)
 	{
 		close(fd);
 		dup2(a->fd[STDIN__], STDIN__);
-		dup2(a->fd[STDOUT__], STDOUT__);
+		if (a->ro_l || (a->ab < a->tkn_l && !ft_strcmp(a->tkn[a->ab]._, "|")))
+			dup2(a->fd[STDOUT__], STDOUT__);
 		execve(a->av[0], a->av, environ);
 	}
 }
@@ -80,7 +81,9 @@ static t_i32	path_run2(t_a *a, t_i8 **paths)
 		{
 			close(fd);
 			dup2(a->fd[STDIN__], STDIN__);
-			dup2(a->fd[STDOUT__], STDOUT__);
+			if (a->ro_l
+				|| (a->ab < a->tkn_l && !ft_strcmp(a->tkn[a->ab]._, "|")))
+				dup2(a->fd[STDOUT__], STDOUT__);
 			execve(path, a->av, environ);
 			return (0);
 		}
