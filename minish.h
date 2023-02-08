@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:28:47 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 22:04:12 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef enum e_err
 	ERR_FILEFAIL,
 	ERR_NOCMD,
 	ERR_IDENTI,
+	ERR_NUMERIC,
+	ERR_TOOMANY,
 	ERR_UNKNOWN,
 	ERR_MAX,
 }	t_err;
@@ -83,7 +85,6 @@ typedef enum e_type
 	TYPE_CMD,
 }	t_type;
 
-typedef struct dirent	t_dirent;
 typedef struct s_tkn
 {
 	t_i8	*_;
@@ -129,7 +130,9 @@ typedef struct s_a
 	t_i8		buf[BUF_MAX];
 	t_i32		buf_l;
 	t_i32		fd[3];
+	t_i32		fd_old[3];
 	t_i32		rtn;
+	t_i32		sigrtn;
 	t_i32		ab;
 	t_i32		ae;
 	t_i8		*av[ARG_MAX];
@@ -145,10 +148,12 @@ typedef struct s_a
 	t_i32		rp_l;
 	t_bdll		env;
 	t_bdll		exp;
+	t_i32		dup2_cnt;
+	t_i32		dup2_cnt_old;
 }	t_a;
-
-extern t_i8	**environ;
-extern t_a	*g_a;
+typedef struct dirent	t_dirent;
+extern t_i8				**environ;
+extern t_a				*g_a;
 
 void	sigtoggle(t_a *a);
 void	sigint_rl(t_i32 sig);

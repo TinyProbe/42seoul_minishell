@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:18:31 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:52:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void		make_env(t_a *a, t_i32 i);
 void	env(t_a *a)
 {
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "env: ");
+	redirect(a);
 	if (a->ac == 1)
 		show_env(a);
 	else

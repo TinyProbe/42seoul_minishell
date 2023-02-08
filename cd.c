@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 16:36:41 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:52:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	cd(t_a *a)
 {
 	t_i8	*path;
 
+	redirect(a);
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "cd: ");
 	if (a->ac == 1)
 		path = getenv__(a, "HOME");

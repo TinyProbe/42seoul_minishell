@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:22:02 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 15:34:33 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:51:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static void	reout(t_a *a);
 
 void	redirect(t_a *a)
 {
+	a->fd_old[0] = a->fd[0];
+	a->fd_old[1] = a->fd[1];
+	a->fd_old[2] = a->fd[2];
 	rein(a);
 	reout(a);
 }
@@ -53,10 +56,11 @@ static void	heredoc(t_a *a, t_i32 i)
 	pipe(fd);
 	while (TRUE)
 	{
-		s = ft_gnl(STDIN__);
-		if (!ft_strncmp(s, a->ri[i + 1], ft_strlen(a->ri[i + 1])))
+		s = readline("> ");
+		if (!ft_strcmp(s, a->ri[i + 1]))
 			break ;
 		write(fd[1], s, ft_strlen(s));
+		write(fd[1], "\n", 1);
 		free(s);
 	}
 	free(s);

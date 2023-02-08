@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/05 19:41:29 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:53:56 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	unset(t_a *a)
 	t_i32	i;
 
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "unset: ");
+	redirect(a);
 	if (check_env2(a, 0, 0))
 		error(a);
 	else

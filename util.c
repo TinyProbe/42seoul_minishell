@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:16:05 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:07:59 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 22:24:28 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	output(t_a *a, t_i32 out, t_i32 err)
 	}
 	if (i != j)
 		write(out, a->buf + j, i - j);
-	a->buf_l = 0;
 	if (out == STDOUT__)
 		lastln(a);
+	a->buf_l = 0;
 }
 
 void	endout(t_a *a, t_i8 fd)

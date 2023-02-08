@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:19:39 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:52:32 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	make_exp(t_a *a, t_i32 i);
 void	export__(t_a *a)
 {
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "export: ");
+	redirect(a);
 	if (a->ac == 1)
 		show_exp(a);
 	else

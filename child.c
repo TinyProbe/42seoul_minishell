@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:02:43 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 02:59:32 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 22:05:18 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	child(t_a *a, t_i32 *fd)
 
 static void	setchild(t_a *a, t_i32 *fd)
 {
+	a->dup2_cnt_old = a->dup2_cnt;
 	a->fd[STDOUT__] = fd[1];
 	a->fd[STDERR__] = fd[1];
 	close(fd[0]);

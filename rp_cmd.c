@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:33:56 by tkong             #+#    #+#             */
-/*   Updated: 2023/01/31 20:51:10 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 18:39:41 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ void	rp_cmd(t_a *a)
 	a->cmd[a->cmd_l] = '\0';
 	process(a);
 	rp_buf(a);
-	a->rp[a->rp_l]._ = ft_memcpy(
-			malloc(sizeof(t_i8) * a->buf_l + 1), a->buf, a->buf_l);
-	a->rp[a->rp_l]._[a->buf_l] = '\0';
+	a->rp[a->rp_l]._ = ft_strndup(a->buf, a->buf_l);
 	a->rp[a->rp_l].len = a->buf_l;
 	a->rp[a->rp_l].type = TYPE_CMD;
+	a->buf_l = 0;
 	init(a);
 }
 

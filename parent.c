@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:01:20 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 02:58:10 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 22:27:42 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,18 @@ void	parent(t_a *a, t_i32 *fd, pid_t pid)
 	setparent(a, fd);
 	waitpid(pid, &(a->rtn), 0);
 	a->rtn /= 256;
+	if (a->sigrtn)
+	{
+		a->rtn = a->sigrtn;
+		a->sigrtn = 0;
+	}
 	a->buf_l = read(a->fd[STDIN__], a->buf, BUF_MAX);
 	clearparent(a, fd);
 }
 
 static void	setparent(t_a *a, t_i32 *fd)
 {
+	a->fd_old[STDIN__] = a->fd[STDIN__];
 	a->fd[STDIN__] = fd[0];
 	close(fd[1]);
 	close(fd[2]);
@@ -38,6 +44,6 @@ static void	setparent(t_a *a, t_i32 *fd)
 
 static void	clearparent(t_a *a, t_i32 *fd)
 {
-	a->fd[STDIN__] = STDIN__;
+	a->fd[STDIN__] = a->fd_old[STDIN__];
 	close(fd[0]);
 }

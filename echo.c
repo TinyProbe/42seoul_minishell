@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/06 20:30:00 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 18:09:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ void	echo(t_a *a)
 	t_bool	eol;
 
 	len = 0;
-	i = 0;
+	i = 1;
 	eol = TRUE;
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "echo: ");
-	while (++i < a->ac && a->av[i][0] == '-')
-		if (ft_strchr(a->av[i], 'n'))
-			eol = FALSE;
+	if (a->ac > 1 && !ft_strcmp(a->av[1], "-n"))
+	{
+		eol = FALSE;
+		++i;
+	}
 	len = _cpy(a, s, i - 1);
 	if (eol)
 		s[len++] = '\n';

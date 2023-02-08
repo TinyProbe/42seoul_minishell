@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:29:50 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:26:08 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/08 18:35:22 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ static void	check_stack(t_a *a)
 
 static t_i32	setrange(t_a *a)
 {
-	if (!ft_isalpha(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
+	if (!ft_isalnum(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
 		&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '_'
-		&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '-')
+		&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '-'
+		&& a->tkn[a->ab]._[a->rp[a->rp_l].r + 1] != '?')
 		return (-1);
 	a->rp[a->rp_l].l = a->rp[a->rp_l].r;
 	if (ft_isdigit(a->tkn[a->ab]._[a->rp[a->rp_l].r + 1])
