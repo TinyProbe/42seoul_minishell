@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 18:09:57 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 04:38:46 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ static t_i32	_cpy(t_a *a, t_i8 *s, t_i32 i)
 static void	_out(t_a *a, t_i8 *s, t_i32 len)
 {
 	write(a->fd[STDOUT__], s, len);
-	endout(a, STDOUT__);
+	if (a->ro_l == 0)
+		endout(a, STDOUT__);
 }

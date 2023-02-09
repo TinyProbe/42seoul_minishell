@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 20:53:56 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 03:47:08 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 void	unset(t_a *a)
 {
 	t_i32	i;
+	t_i32	fd[2];
 
+	pipe(fd);
+	setself(a, fd);
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "unset: ");
-	redirect(a);
 	if (check_env2(a, 0, 0))
 		error(a);
 	else
@@ -30,4 +32,5 @@ void	unset(t_a *a)
 		}
 	}
 	a->proc_l -= ft_strlen("unset: ");
+	recover(a, fd);
 }

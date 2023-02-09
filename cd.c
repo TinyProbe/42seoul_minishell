@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 20:52:22 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 03:46:44 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static void	repwd_exp(t_a *a);
 void	cd(t_a *a)
 {
 	t_i8	*path;
+	t_i32	fd[2];
 
-	redirect(a);
+	pipe(fd);
+	setself(a, fd);
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "cd: ");
 	if (a->ac == 1)
 		path = getenv__(a, "HOME");
@@ -36,6 +38,7 @@ void	cd(t_a *a)
 	repwd_exp(a);
 	sync_env(a);
 	a->proc_l -= ft_strlen("cd: ");
+	recover(a, fd);
 }
 
 static void	repwd_env(t_a *a)

@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 20:52:32 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 03:46:44 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ static void	make_exp(t_a *a, t_i32 i);
 
 void	export__(t_a *a)
 {
+	t_i32	fd[2];
+
+	pipe(fd);
+	setself(a, fd);
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "export: ");
-	redirect(a);
 	if (a->ac == 1)
 		show_exp(a);
 	else
@@ -31,6 +34,7 @@ void	export__(t_a *a)
 	}
 	sync_env(a);
 	a->proc_l -= ft_strlen("export: ");
+	recover(a, fd);
 }
 
 static void	show_exp(t_a *a)

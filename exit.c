@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 23:52:14 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 20:53:56 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 03:46:58 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ static t_i32	check_arg(t_a *a);
 void	exit__(t_a *a)
 {
 	t_i32	rtn;
+	t_i32	fd[2];
 
+	pipe(fd);
+	setself(a, fd);
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "exit: ");
-	redirect(a);
 	rtn = 0;
 	if (a->ac > 2)
 		a->errn = ERR_TOOMANY;
@@ -35,6 +37,7 @@ void	exit__(t_a *a)
 	}
 	error(a);
 	a->proc_l -= ft_strlen("exit: ");
+	recover(a, fd);
 }
 
 static t_i32	getrtn__(t_a *a)

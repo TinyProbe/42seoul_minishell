@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 09:03:29 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 22:04:12 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 03:42:10 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void	parent(t_a *a, t_i32 *fd, pid_t pid);
 void	child(t_a *a, t_i32 *fd);
 
 void	redirect(t_a *a);
+void	recover(t_a *a, t_i32 *fd);
 
 void	minish(t_a *a);
 
@@ -221,5 +222,6 @@ t_i32	check_env(t_a *a, t_i32 i, t_i32 j, t_i8 *k);
 t_i32	check_env2(t_a *a, t_i32 i, t_i32 j);
 void	sync_env(t_a *a);
 t_i32	cmdtype(t_a *a);
+void	setself(t_a *a, t_i32 *fd);
 
 #endif

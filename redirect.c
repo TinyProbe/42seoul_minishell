@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:22:02 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 20:51:32 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 01:10:57 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ static void	reout(t_a *a);
 
 void	redirect(t_a *a)
 {
-	a->fd_old[0] = a->fd[0];
-	a->fd_old[1] = a->fd[1];
-	a->fd_old[2] = a->fd[2];
 	rein(a);
 	reout(a);
 }

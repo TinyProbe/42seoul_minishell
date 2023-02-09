@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:40:06 by tkong             #+#    #+#             */
-/*   Updated: 2023/02/08 15:19:12 by tkong            ###   ########.fr       */
+/*   Updated: 2023/02/09 04:35:44 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	del_env(t_bdll *map, const t_i8 *k)
 
 t_i32	cmdtype(t_a *a)
 {
+	if (a->dup2_cnt)
+		return (0);
 	if (a->cmd_l || (a->ac && (!ft_strcmp(a->av[0], "cd")
 				|| !ft_strcmp(a->av[0], "env")
 				|| !ft_strcmp(a->av[0], "export")
