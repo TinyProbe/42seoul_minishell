@@ -26,11 +26,8 @@ void	echo(t_a *a)
 	i = 1;
 	eol = TRUE;
 	a->proc_l += ft_strcpy(a->proc + a->proc_l, "echo: ");
-	if (a->ac > 1 && !ft_strcmp(a->av[1], "-n"))
-	{
+	if (a->ac > 1 && !ft_strcmp(a->av[1], "-n") && ++i)
 		eol = FALSE;
-		++i;
-	}
 	len = _cpy(a, s, i - 1);
 	if (eol)
 		s[len++] = '\n';
@@ -51,7 +48,7 @@ static t_i32	_cpy(t_a *a, t_i8 *s, t_i32 i)
 		len += tmp;
 		s[len++] = ' ';
 	}
-	return (--len);
+	return (ft_max(0, --len));
 }
 
 static void	_out(t_a *a, t_i8 *s, t_i32 len)
